@@ -41,7 +41,7 @@ export async function signInWithGoogle() {
   return await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: redirectTo: new URL("./onboarding.html", window.location.href).href
+      redirectTo: new URL("./onboarding.html", window.location.href).href
     }
   });
 }
