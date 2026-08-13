@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fecta Start Here</title>
+
+  <style>
+    :root {
+      --bg: #05080c;
+      --surface: #0b131c;
+      --line: #203443;
+      --text: #f8fbff;
+      --muted: #92a6b5;
+      --blue: #1ea8ff;
+      --blue2: #7bd5ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 80% 8%, rgba(30,168,255,.12), transparent 25%),
+        linear-gradient(180deg, #030507, #081019);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: auto;
+      padding: 42px 18px 70px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--blue2);
+      font-weight: 900;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin: 8px 0;
+      letter-spacing: -.04em;
+    }
+
+    h2 {
+      font-size: 28px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card {
+      padding: 26px;
+      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin: 18px 0 22px;
+    }
+
+    .progress span {
+      height: 6px;
+      border-radius: 10px;
+      background: #172530;
+    }
+
+    .progress span.active {
+      background: var(--blue);
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .choice {
+      padding: 14px;
+      border-radius: 13px;
+      border: 1px solid #294155;
+      background: #09121a;
+      color: white;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .choice.selected {
+      border-color: var(--blue);
+      background: rgba(30,168,255,.12);
+    }
+
+    .field {
+      margin-top: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 11px;
+      border: 1px solid #294155;
+      background: #060b10;
+      color: white;
+    }
+
+    .actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--blue);
+      color: #00131f;
+    }
+
+    .secondary {
+      background: #121d27;
+      color: white;
+      border: 1px solid #294155;
+    }
+
+    .message {
+      min-height: 22px;
+      margin-top: 14px;
+      color: #ffd37a;
+    }
+
+    @media (max-width: 620px) {
+      .choices {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="wrap">
+
+    <div class="kicker">Start Here</div>
+
+    <h1>Build your first Fecta path.</h1>
+
+    <p>
+      Keep it simple. You can change these choices later.
+    </p>
+
+    <div class="progress" id="progress">
+      <span class="active"></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="card">
+
+      <section class="step active" data-step="0">
+
+        <h2>What interests you?</h2>
+
+        <p>
+          Choose anything that feels useful right now.
+        </p>
+
+        <div class="choices" id="interests">
+
+          <button class="choice multi">
+            🏃 Movement & Fitness
+          </button>
+
+          <button class="choice multi">
+            🌿 Nature & Gardening
+          </button>
+
+          <button class="choice multi">
+            🤝 Community
+          </button>
+
+          <button class="choice multi">
+            📚 Learning & Skills
+          </button>
+
+          <button class="choice multi">
+            💼 Work & Opportunity
+          </button>
+
+          <button class="choice multi">
+            ❤️ Purpose & Wellbeing
+          </button>
+
+          <button class="choice multi">
+            🏒 Local Sports
+          </button>
+
+          <button class="choice multi">
+            🥕 Local Food & Harvest
+          </button>
+
+        </div>
+
+        <div class="actions">
+          <button class="btn primary next">
+            Continue
+          </button>
+        </div>
+
+      </section>
+
+      <section class="step" data-step="1">
+
+        <h2>What would you like to improve first?</h2>
+
+        <div class="choices" id="direction">
+
+          <button class="choice single">
+            More energy
+          </button>
+
+          <button class="choice single">
+            Clearer direction
+          </button>
+
+          <button class="choice single">
+            Better movement
+          </button>
+
+          <button class="choice single">
+            Stronger habits
+          </button>
+
+          <button class="choice single">
+            More connection
+          </button>
+
+          <button class="choice single">
+            Learn something new
+          </button>
+
+        </div>
+
+        <div class="actions">
+          <button class="btn secondary back">
+            Back
+          </button>
+
+          <button class="btn primary next">
+            Continue
+          </button>
+        </div>
+
+      </section>
+
+      <section class="step" data-step="2">
+
+        <h2>Where should Fecta focus locally?</h2>
+
+        <div class="field">
+
+          <label for="community">
+            Community
+          </label>
+
+          <select id="community">
+            <option>Georgina</option>
+            <option>Keswick</option>
+            <option>Sutton</option>
+            <option>Pefferlaw</option>
+            <option>Other / nearby</option>
+          </select>
+
+        </div>
+
+        <div class="field">
+
+          <label for="age">
+            Age range
+          </label>
+
+          <select id="age">
+            <option>Under 13</option>
+            <option>13–17</option>
+            <option selected>18–29</option>
+            <option>30–49</option>
+            <option>50–64</option>
+            <option>65+</option>
+          </select>
+
+        </div>
+
+        <p>
+          Age range helps Fecta adjust learning,
+          challenges, and language. It is not shown publicly.
+        </p>
+
+        <div class="actions">
+
+          <button class="btn secondary back">
+            Back
+          </button>
+
+          <button class="btn primary next">
+            Continue
+          </button>
+
+        </div>
+
+      </section>
+
+      <section class="step" data-step="3">
+
+        <h2>How should the Fecta Guide help?</h2>
+
+        <div class="choices" id="ai">
+
+          <button
+            class="choice single selected"
+            data-value="guided"
+          >
+            Guide me when useful
+          </button>
+
+          <button
+            class="choice single"
+            data-value="ask_only"
+          >
+            Only when I ask
+          </button>
+
+          <button
+            class="choice single"
+            data-value="off"
+          >
+            Keep AI off for now
+          </button>
+
+        </div>
+
+        <p>
+          You can pause or stop the Guide at any time.
+        </p>
+
+        <div class="actions">
+
+          <button class="btn secondary back">
+            Back
+          </button>
+
+          <button class="btn primary next">
+            Continue
+          </button>
+
+        </div>
+
+      </section>
+
+      <section class="step" data-step="4">
+
+        <h2>Choose your privacy default.</h2>
+
+        <div class="choices" id="privacy">
+
+          <button
+            class="choice single selected"
+            data-value="private"
+          >
+            Private by default
+          </button>
+
+          <button
+            class="choice single"
+            data-value="ask_before_share"
+          >
+            Ask before sharing milestones
+          </button>
+
+          <button
+            class="choice single"
+            data-value="approved_public"
+          >
+            Share approved community achievements
+          </button>
+
+        </div>
+
+        <p>
+          Journal entries remain private unless
+          you explicitly change their visibility.
+        </p>
+
+        <div class="actions">
+
+          <button class="btn secondary back">
+            Back
+          </button>
+
+          <button
+            class="btn primary"
+            id="finish"
+          >
+            Create My Path
+          </button>
+
+        </div>
+
+        <div class="message" id="message"></div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="./config.js"></script>
+
+  <script type="module">
+
+    import {
+      getCurrentUser,
+      saveOnboarding
+    } from "./fecta-auth.js";
+
+    const user =
+      await getCurrentUser().catch(() => null);
+
+    if (!user) {
+      window.location.href =
+        "./signin.html";
+    }
+
+    let currentStep = 0;
+
+    const steps =
+      [...document.querySelectorAll(".step")];
+
+    const progressDots =
+      [...document.querySelectorAll("#progress span")];
+
+    function renderStep() {
+
+      steps.forEach((step, index) => {
+        step.classList.toggle(
+          "active",
+          index === currentStep
+        );
+      });
+
+      progressDots.forEach((dot, index) => {
+        dot.classList.toggle(
+          "active",
+          index <= currentStep
+        );
+      });
+
+    }
+
+    document.querySelectorAll(".next")
+      .forEach((button) => {
+
+        button.onclick = () => {
+
+          if (currentStep < 4) {
+            currentStep += 1;
+            renderStep();
+          }
+
+        };
+
+      });
+
+    document.querySelectorAll(".back")
+      .forEach((button) => {
+
+        button.onclick = () => {
+
+          if (currentStep > 0) {
+            currentStep -= 1;
+            renderStep();
+          }
+
+        };
+
+      });
+
+    document.querySelectorAll(".multi")
+      .forEach((button) => {
+
+        button.onclick = () => {
+          button.classList.toggle("selected");
+        };
+
+      });
+
+    document.querySelectorAll(".single")
+      .forEach((button) => {
+
+        button.onclick = () => {
+
+          const group = button.parentElement;
+
+          group
+            .querySelectorAll(".single")
+            .forEach((item) => {
+              item.classList.remove("selected");
+            });
+
+          button.classList.add("selected");
+
+        };
+
+      });
+
+    document.getElementById("finish").onclick =
+      async () => {
+
+        const message =
+          document.getElementById("message");
+
+        const interests =
+          [...document.querySelectorAll(
+            "#interests .selected"
+          )].map((item) =>
+            item.textContent.trim()
+          );
+
+        const direction =
+          document.querySelector(
+            "#direction .selected"
+          )?.textContent.trim();
+
+        const aiMode =
+          document.querySelector(
+            "#ai .selected"
+          )?.dataset.value || "guided";
+
+        const privacyMode =
+          document.querySelector(
+            "#privacy .selected"
+          )?.dataset.value || "private";
+
+        if (!interests.length) {
+
+          message.textContent =
+            "Choose at least one interest.";
+
+          currentStep = 0;
+          renderStep();
+
+          return;
+        }
+
+        if (!direction) {
+
+          message.textContent =
+            "Choose one direction to start with.";
+
+          currentStep = 1;
+          renderStep();
+
+          return;
+        }
+
+        try {
+
+          message.textContent =
+            "Building your path...";
+
+          await saveOnboarding({
+            interests,
+            direction,
+            community:
+              document.getElementById(
+                "community"
+              ).value,
+            ageRange:
+              document.getElementById(
+                "age"
+              ).value,
+            aiMode,
+            privacyMode
+          });
+
+          message.textContent =
+            "Your Fecta path is ready.";
+
+          setTimeout(() => {
+
+            window.location.href =
+              "./member.html";
+
+          }, 500);
+
+        } catch (error) {
+
+          message.textContent =
+            error.message;
+
+        }
+
+      };
+
+  </script>
+
+</body>
+</html>
