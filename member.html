@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Fecta</title>
+
+  <style>
+    :root {
+      --bg: #05080c;
+      --surface: #0b131c;
+      --line: #203443;
+      --text: #f8fbff;
+      --muted: #92a6b5;
+      --blue: #1ea8ff;
+      --blue2: #7bd5ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 82% 8%, rgba(30,168,255,.12), transparent 25%),
+        linear-gradient(180deg, #030507, #081019);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: auto;
+      padding: 32px 18px 70px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: .14em;
+    }
+
+    .logo span {
+      color: var(--blue);
+    }
+
+    .kicker {
+      margin-top: 26px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--blue2);
+      font-weight: 900;
+    }
+
+    h1 {
+      font-size: 44px;
+      letter-spacing: -.04em;
+      margin: 8px 0;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin: 8px 0;
+    }
+
+    h3 {
+      margin: 7px 0;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .s4 {
+      grid-column: span 4;
+    }
+
+    .s6 {
+      grid-column: span 6;
+    }
+
+    .s8 {
+      grid-column: span 8;
+    }
+
+    .s12 {
+      grid-column: span 12;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid #182632;
+    }
+
+    .row:last-child {
+      border-bottom: 0;
+    }
+
+    .btn {
+      padding: 11px 15px;
+      border-radius: 11px;
+      border: 0;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--blue);
+      color: #00131f;
+    }
+
+    .secondary {
+      background: #121d27;
+      color: white;
+      border: 1px solid #294155;
+    }
+
+    .actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .error {
+      margin-top: 16px;
+      color: #ffb6b6;
+    }
+
+    @media (max-width: 760px) {
+      .grid {
+        display: block;
+      }
+
+      .card {
+        margin-bottom: 12px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="wrap">
+
+    <div class="logo">
+      FEC<span>TA</span>
+    </div>
+
+    <div class="kicker">
+      Personal
+    </div>
+
+    <h1 id="welcome">
+      Welcome back.
+    </h1>
+
+    <p>
+      Your direction, growth, and community journey
+      are connected to your own Fecta account.
+    </p>
+
+    <div class="grid">
+
+      <section class="card s8">
+
+        <div class="kicker">
+          My Path
+        </div>
+
+        <h2 id="direction">
+          Loading your path...
+        </h2>
+
+        <p id="stage"></p>
+
+        <div class="actions">
+
+          <button
+            class="btn primary"
+            onclick="window.location.href='./onboarding.html'"
+          >
+            Update My Path
+          </button>
+
+        </div>
+
+      </section>
+
+      <section class="card s4">
+
+        <div class="kicker">
+          Community
+        </div>
+
+        <h2 id="community">
+          —
+        </h2>
+
+        <p>
+          Your local brief, events, and opportunities
+          can use this setting.
+        </p>
+
+      </section>
+
+      <section class="card s4">
+
+        <div class="kicker">
+          AI Guide
+        </div>
+
+        <h2 id="aiMode">
+          —
+        </h2>
+
+        <p>
+          You remain in control of when Fecta AI helps.
+        </p>
+
+      </section>
+
+      <section class="card s4">
+
+        <div class="kicker">
+          Privacy
+        </div>
+
+        <h2 id="privacyMode">
+          —
+        </h2>
+
+        <p>
+          Your account controls what stays private
+          and what may be shared.
+        </p>
+
+      </section>
+
+      <section class="card s4">
+
+        <div class="kicker">
+          Age Experience
+        </div>
+
+        <h2 id="ageRange">
+          —
+        </h2>
+
+        <p>
+          Fecta uses this to adjust language and learning depth.
+        </p>
+
+      </section>
+
+      <section class="card s6">
+
+        <div class="kicker">
+          Active Goals
+        </div>
+
+        <div id="goals">
+
+          <p class="empty">
+            No active goals yet.
+          </p>
+
+        </div>
+
+      </section>
+
+      <section class="card s6">
+
+        <div class="kicker">
+          Recent Growth
+        </div>
+
+        <div id="achievements">
+
+          <p class="empty">
+            No achievements yet.
+          </p>
+
+        </div>
+
+      </section>
+
+      <section class="card s12">
+
+        <div class="kicker">
+          Next Step
+        </div>
+
+        <h2>
+          Keep the path simple.
+        </h2>
+
+        <p>
+          Fecta will eventually use your path,
+          interests, local community, events,
+          knowledge, and opportunities to suggest
+          one useful next action.
+        </p>
+
+        <div class="actions">
+
+          <button
+            class="btn secondary"
+            id="signOutButton"
+          >
+            Sign Out
+          </button>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <div class="error" id="error"></div>
+
+  </main>
+
+  <script src="./config.js"></script>
+
+  <script type="module">
+
+    import {
+      loadMemberHome,
+      signOut
+    } from "./fecta-auth.js";
+
+    const errorBox =
+      document.getElementById("error");
+
+    function readable(value) {
+
+      if (!value) {
+        return "Not set";
+      }
+
+      return value
+        .replaceAll("_", " ")
+        .replace(/\b\w/g, (letter) =>
+          letter.toUpperCase()
+        );
+
+    }
+
+    try {
+
+      const data =
+        await loadMemberHome();
+
+      if (!data) {
+
+        window.location.href =
+          "./signin.html";
+
+      } else {
+
+        const profile =
+          data.profile;
+
+        const path =
+          data.path;
+
+        if (profile?.display_name) {
+
+          document.getElementById(
+            "welcome"
+          ).textContent =
+            `Welcome back, ${profile.display_name}.`;
+
+        }
+
+        document.getElementById(
+          "community"
+        ).textContent =
+          profile?.community ||
+          "Not set";
+
+        document.getElementById(
+          "ageRange"
+        ).textContent =
+          profile?.age_range ||
+          "Not set";
+
+        document.getElementById(
+          "aiMode"
+        ).textContent =
+          readable(
+            profile?.ai_mode
+          );
+
+        document.getElementById(
+          "privacyMode"
+        ).textContent =
+          readable(
+            profile?.privacy_mode
+          );
+
+        document.getElementById(
+          "direction"
+        ).textContent =
+          path?.direction ||
+          "Choose your first direction";
+
+        document.getElementById(
+          "stage"
+        ).textContent =
+          path
+            ? `Current stage: ${readable(path.current_stage)}`
+            : "Use Start Here to build your first Fecta path.";
+
+        if (data.goals?.length) {
+
+          document.getElementById(
+            "goals"
+          ).innerHTML =
+            data.goals
+              .map((goal) => {
+
+                return `
+                  <div class="row">
+                    <span>
+                      ${goal.title}
+                    </span>
+
+                    <strong>
+                      ${goal.progress_percent}%
+                    </strong>
+                  </div>
+                `;
+
+              })
+              .join("");
+
+        }
+
+        if (
+          data.achievements?.length
+        ) {
+
+          document.getElementById(
+            "achievements"
+          ).innerHTML =
+            data.achievements
+              .map((achievement) => {
+
+                return `
+                  <div>
+                    <h3>
+                      ${achievement.title}
+                    </h3>
+
+                    <p>
+                      ${
+                        achievement.description ||
+                        ""
+                      }
+                    </p>
+                  </div>
+                `;
+
+              })
+              .join("");
+
+        }
+
+      }
+
+    } catch (error) {
+
+      errorBox.textContent =
+        error.message;
+
+    }
+
+    document.getElementById(
+      "signOutButton"
+    ).onclick =
+      async () => {
+
+        await signOut();
+
+        window.location.href =
+          "./signin.html";
+
+      };
+
+  </script>
+
+</body>
+</html>
