@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fecta Sign In</title>
+  <title>Fecta Sign In</title>\n  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
 
   <style>
     :root {
@@ -40,15 +40,8 @@
       border-radius: 22px;
     }
 
-    .logo {
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: .14em;
-    }
-
-    .logo span {
-      color: var(--blue);
-    }
+    .logo { display: inline-flex; text-decoration: none; }
+    .logo img { display: block; width: 178px; height: 86px; object-fit: contain; }
 
     h1 {
       font-size: 36px;
@@ -115,7 +108,7 @@
 
   <main class="card">
 
-    <div class="logo">FEC<span>TA</span></div>
+    <a class="logo" href="./" aria-label="Fecta Fitness home"><img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness"></a>
 
     <h1>Welcome to Fecta</h1>
 
