@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Fecta</title>
+  <title>My Fecta</title>\n  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
 
   <style>
     :root {
@@ -36,15 +36,8 @@
       padding: 32px 18px 70px;
     }
 
-    .logo {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: .14em;
-    }
-
-    .logo span {
-      color: var(--blue);
-    }
+    .logo { display: inline-flex; text-decoration: none; }
+    .logo img { display: block; width: 164px; height: 78px; object-fit: contain; }
 
     .kicker {
       margin-top: 26px;
@@ -173,9 +166,9 @@
 
   <main class="wrap">
 
-    <div class="logo">
-      FEC<span>TA</span>
-    </div>
+    <a class="logo" href="./" aria-label="Fecta Fitness home">
+      <img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness">
+    </a>
 
     <div class="kicker">
       Personal
