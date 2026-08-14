@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fecta Forward — Build Capability. Find Direction. Make an Impact.</title>
+<title>Fecta Forward — Build Capability. Find Direction. Make an Impact.</title>\n<link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml">
 <style>
 :root{--bg:#05070a;--panel:#0b1118;--text:#f7fbff;--muted:#9aabb9;--blue:#1ea8ff;--blue2:#80d7ff;--line:#1d2b38}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(#040609,#08111b 55%,#05070a);color:var(--text)}
 button,input,textarea{font:inherit}.shell{max-width:1220px;margin:auto;padding:0 24px}
 header{position:sticky;top:0;z-index:20;background:rgba(5,7,10,.86);backdrop-filter:blur(14px);border-bottom:1px solid #16232e}
-.nav{height:70px;display:flex;align-items:center;justify-content:space-between}.logo{font-size:28px;font-weight:900;letter-spacing:.14em}.logo span{color:var(--blue)}
+.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{display:inline-flex;align-items:center;text-decoration:none;flex:0 0 auto}.logo img{display:block;width:154px;height:64px;object-fit:contain}
 .navlinks{display:flex;gap:22px;color:#c7d4df;font-size:14px}.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:800;cursor:pointer}
 .primary{background:var(--blue);color:#00131f}.secondary{background:#121d27;color:white;border:1px solid #2a4255}
 .hero{padding:82px 0 58px}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}
@@ -41,7 +41,7 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 </style>
 </head>
 <body>
-<header><div class="shell nav"><div class="logo">FEC<span>TA</span></div><div class="navlinks"><span>Fecta Body</span><span>Find Direction</span><span>Community</span><span>How it works</span></div><div><button class="btn secondary" onclick="document.getElementById('pathways').scrollIntoView()">Explore Fecta</button> <button class="btn primary" onclick="document.getElementById('pathways').scrollIntoView()">Start Moving Forward</button></div></div></header>
+<header><div class="shell nav"><a class="logo" href="./" aria-label="Fecta Fitness home"><img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness"></a><div class="navlinks"><span>Fecta Body</span><span>Find Direction</span><span>Community</span><span>How it works</span></div><div><button class="btn secondary" onclick="document.getElementById('pathways').scrollIntoView()">Explore Fecta</button> <button class="btn primary" onclick="document.getElementById('pathways').scrollIntoView()">Start Moving Forward</button></div></div></header>
 
 <section class="hero"><div class="shell hero-grid">
 <div><div class="kicker">Fecta Forward →</div><h1>Become more capable.<br>Find where you belong.<br>Put it to use.</h1><p class="lead">Fecta helps you build your body, understand your strengths and direction, and connect what you are good at with real opportunities in your life and community.</p><div class="actions"><button class="btn primary" onclick="document.getElementById('pathways').scrollIntoView()">Choose My Starting Point</button><button class="btn secondary" onclick="openGuide()">Ask the Fecta Guide</button></div><div class="note">Start with your body, your direction, or your community. One clear next step at a time.</div></div>
@@ -71,7 +71,7 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 </div></section>
 
 <section class="section" id="app"><div class="shell"><div class="section-head"><div class="kicker">The app direction</div><h2>A conversation with visual support</h2><p>The dashboard stays small. The Fecta Guide brings forward only what is useful right now.</p></div><div class="split">
-<div class="app"><div class="appbar"><b>FECTA</b><span>⚙</span></div><div class="appbody"><div class="today"><div class="kicker">Today</div><h3>What are you trying to build?</h3><input placeholder="Write one thing..."><button class="btn primary" style="width:100%;margin-top:12px" onclick="notify('Fecta is ready to guide the next step.')">Continue</button></div><div class="tiles"><div class="tile"><strong>↻ Body</strong><span>Movement, control, strength and capability</span></div><div class="tile"><strong>◎ Direction</strong><span>Strengths, passions, skills and next paths</span></div><div class="tile"><strong>⌖ Community</strong><span>People, places, work and opportunities</span></div><div class="tile"><strong>▶ Forward</strong><span>Your one useful next step</span></div></div></div></div>
+<div class="app"><div class="appbar"><img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness" style="width:96px;height:44px;object-fit:contain"><span>⚙</span></div><div class="appbody"><div class="today"><div class="kicker">Today</div><h3>What are you trying to build?</h3><input placeholder="Write one thing..."><button class="btn primary" style="width:100%;margin-top:12px" onclick="notify('Fecta is ready to guide the next step.')">Continue</button></div><div class="tiles"><div class="tile"><strong>↻ Body</strong><span>Movement, control, strength and capability</span></div><div class="tile"><strong>◎ Direction</strong><span>Strengths, passions, skills and next paths</span></div><div class="tile"><strong>⌖ Community</strong><span>People, places, work and opportunities</span></div><div class="tile"><strong>▶ Forward</strong><span>Your one useful next step</span></div></div></div></div>
 <div class="panel"><div class="kicker">How it stays simple</div><h3>Only four permanent areas</h3><div class="list"><div class="item"><div class="icon">▶</div><div><b>Your Next Step</b><div class="note">The main action for today.</div></div></div><div class="item"><div class="icon">◎</div><div><b>My Path</b><div class="note">What matters and where you are going.</div></div></div><div class="item"><div class="icon">⌖</div><div><b>Community</b><div class="note">Local people, places, programs, and support.</div></div></div><div class="item"><div class="icon">●</div><div><b>My Fecta</b><div class="note">Your tools, settings, data, and personal modules.</div></div></div></div></div>
 </div></div></section>
 
