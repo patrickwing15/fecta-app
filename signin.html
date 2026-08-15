@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fecta Sign In</title>\n  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
+  <title>Fecta Sign In</title>
+  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
 
   <style>
     :root {
@@ -98,9 +99,8 @@
       font-size: 14px;
     }
 
-    .small {
-      font-size: 12px;
-    }
+    .small { font-size: 12px; }
+    .guest-note { text-align: center; margin: 10px 0 0; font-size: 12px; color: var(--muted); }
   </style>
 </head>
 
@@ -151,6 +151,11 @@
     <button class="btn secondary" id="signUpButton">
       Create Account
     </button>
+
+    <button class="btn secondary" id="guestButton">
+      Continue as Guest
+    </button>
+    <p class="guest-note">Explore privately now. Create an account later to save your progress across devices.</p>
 
     <div class="message" id="message"></div>
 
@@ -289,6 +294,11 @@
         }
 
       };
+
+    document.getElementById("guestButton").onclick = () => {
+      localStorage.setItem("fecta_guest_mode", "true");
+      window.location.href = "./onboarding.html";
+    };
 
     const existingUser =
       await getCurrentUser().catch(() => null);
