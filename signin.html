@@ -1,310 +1,120 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fecta Sign In</title>
-  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Sign in to Fecta or continue privately as a guest.">
+  <meta name="theme-color" content="#05080c">
+  <title>Sign In — Fecta</title>
+  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml">
   <style>
-    :root {
-      --bg: #05080c;
-      --surface: #0b131c;
-      --line: #203443;
-      --text: #f8fbff;
-      --muted: #92a6b5;
-      --blue: #1ea8ff;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background:
-        radial-gradient(circle at 80% 10%, rgba(30,168,255,.12), transparent 25%),
-        linear-gradient(180deg, #030507, #081019);
-      font-family: Arial, sans-serif;
-      color: var(--text);
-    }
-
-    .card {
-      width: min(460px, 100%);
-      padding: 30px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-    }
-
-    .logo { display: inline-flex; text-decoration: none; }
-    .logo img { display: block; width: 178px; height: 86px; object-fit: contain; }
-
-    h1 {
-      font-size: 36px;
-      margin: 24px 0 8px;
-      letter-spacing: -.03em;
-    }
-
-    p {
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      margin: 7px 0;
-      border-radius: 11px;
-      border: 1px solid #294155;
-      background: #060b10;
-      color: white;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 13px;
-      margin-top: 10px;
-      border-radius: 11px;
-      border: 0;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .primary {
-      background: var(--blue);
-      color: #00131f;
-    }
-
-    .secondary {
-      background: #121d27;
-      color: white;
-      border: 1px solid #294155;
-    }
-
-    .or {
-      text-align: center;
-      color: var(--muted);
-      margin: 15px 0;
-    }
-
-    .message {
-      min-height: 22px;
-      margin-top: 12px;
-      color: #ffb6b6;
-      font-size: 14px;
-    }
-
-    .small { font-size: 12px; }
-    .guest-note { text-align: center; margin: 10px 0 0; font-size: 12px; color: var(--muted); }
-    .guest-link { display: block; text-align: center; text-decoration: none; }
+    :root{--bg:#05080c;--surface:#0b131c;--line:#203443;--text:#f8fbff;--muted:#a8bac7;--blue:#1ea8ff;--blue2:#7bd5ff}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 82% 8%,rgba(30,168,255,.13),transparent 28%),linear-gradient(180deg,#030507,#081019);font-family:Arial,sans-serif;color:var(--text)}
+    .card{width:min(480px,100%);padding:30px;border-radius:24px;background:var(--surface);border:1px solid var(--line);box-shadow:0 28px 80px rgba(0,0,0,.35)}
+    .logo{display:inline-flex}.logo img{display:block;width:158px;height:78px;object-fit:contain}h1{font-size:38px;letter-spacing:-.04em;margin:22px 0 8px}p{color:var(--muted);line-height:1.55}
+    .modes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:22px 0 14px}.mode{border:1px solid #294155;background:#08111a;color:#c5d3dc;border-radius:11px;padding:11px;font-weight:800;cursor:pointer}.mode.active{background:rgba(30,168,255,.14);border-color:var(--blue);color:white}
+    .field{margin-top:13px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:6px;color:#dbe7ef}.field input{width:100%;padding:13px;border-radius:11px;border:1px solid #294155;background:#060b10;color:white}.field input::placeholder{color:#7f93a2}.helper{font-size:12px;color:var(--muted);margin-top:6px}
+    .btn{display:flex;width:100%;min-height:46px;align-items:center;justify-content:center;padding:12px 15px;margin-top:11px;border-radius:11px;border:0;font-weight:800;text-decoration:none;cursor:pointer}.primary{background:var(--blue);color:#00131f}.secondary{background:#121d27;color:white;border:1px solid #294155}.btn:hover{filter:brightness(1.08)}:focus-visible{outline:3px solid var(--blue2);outline-offset:3px}
+    .divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;margin:17px 0}.divider:before,.divider:after{content:"";height:1px;background:var(--line);flex:1}
+    .message{min-height:22px;margin-top:12px;color:#ffd37a;font-size:14px}.privacy{font-size:12px;margin:18px 0 0}.privacy a{color:var(--blue2)}
+    .name-field.hidden{display:none}@media(max-width:520px){.card{padding:23px}h1{font-size:34px}}
   </style>
 </head>
-
 <body>
+<main class="card">
+  <a class="logo" href="./" aria-label="Fecta home"><img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness"></a>
+  <h1 id="title">Welcome back.</h1>
+  <p id="intro">Sign in to continue your saved path, goals, reflections, and community journey.</p>
 
-  <main class="card">
+  <div class="modes" role="tablist" aria-label="Account action">
+    <button class="mode active" id="signInMode" type="button" role="tab" aria-selected="true">Sign in</button>
+    <button class="mode" id="createMode" type="button" role="tab" aria-selected="false">Create account</button>
+  </div>
 
-    <a class="logo" href="./" aria-label="Fecta Fitness home"><img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness"></a>
+  <button class="btn secondary" id="googleButton" type="button">Continue with Google</button>
+  <div class="divider">or use email</div>
 
-    <h1>Welcome to Fecta</h1>
+  <div class="field name-field hidden" id="nameField">
+    <label for="name">Your name</label>
+    <input id="name" type="text" autocomplete="name" placeholder="How should Fecta welcome you?">
+  </div>
+  <div class="field">
+    <label for="email">Email address</label>
+    <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+  </div>
+  <div class="field">
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Enter your password">
+    <div class="helper" id="passwordHelp">Use the password connected to your Fecta account.</div>
+  </div>
 
-    <p>
-      Sign in to continue your personal path,
-      learning, and community journey.
-    </p>
+  <button class="btn primary" id="submitButton" type="button">Sign in</button>
+  <div class="message" id="message" role="status" aria-live="polite"></div>
 
-    <button class="btn secondary" id="googleButton">
-      Continue with Google
-    </button>
+  <div class="divider">or</div>
+  <a class="btn secondary" href="./onboarding.html?guest=1">Continue privately as a guest</a>
+  <p class="helper" style="text-align:center">Guest progress stays on this device. Create an account later to save across devices.</p>
+  <p class="privacy">By using Fecta, you agree to the <a href="./terms.html">Terms</a> and acknowledge the <a href="./privacy.html">Privacy Policy</a> and <a href="./health-disclaimer.html">Health Disclaimer</a>.</p>
+</main>
+<script src="./config.js"></script>
+<script type="module">
+  const message=document.getElementById("message");
+  const nameField=document.getElementById("nameField");
+  const nameInput=document.getElementById("name");
+  const emailInput=document.getElementById("email");
+  const passwordInput=document.getElementById("password");
+  const submitButton=document.getElementById("submitButton");
+  const signInMode=document.getElementById("signInMode");
+  const createMode=document.getElementById("createMode");
+  let mode="signin";
+  let auth=null;
 
-    <div class="or">or</div>
+  function showMessage(text,isError=false){message.textContent=text||"";message.style.color=isError?"#ffb6b6":"#ffd37a"}
+  function setMode(next){
+    mode=next;
+    const creating=mode==="create";
+    signInMode.classList.toggle("active",!creating);createMode.classList.toggle("active",creating);
+    signInMode.setAttribute("aria-selected",String(!creating));createMode.setAttribute("aria-selected",String(creating));
+    nameField.classList.toggle("hidden",!creating);
+    document.getElementById("title").textContent=creating?"Create your Fecta account.":"Welcome back.";
+    document.getElementById("intro").textContent=creating?"Save your path, goals, progress, and reflections across devices.":"Sign in to continue your saved path, goals, reflections, and community journey.";
+    submitButton.textContent=creating?"Create account":"Sign in";
+    passwordInput.autocomplete=creating?"new-password":"current-password";
+    passwordInput.placeholder=creating?"Create at least 8 characters":"Enter your password";
+    document.getElementById("passwordHelp").textContent=creating?"Use at least 8 characters.":"Use the password connected to your Fecta account.";
+    showMessage("");
+  }
+  signInMode.onclick=()=>setMode("signin");createMode.onclick=()=>setMode("create");
 
-    <input
-      id="name"
-      type="text"
-      placeholder="Name — new accounts"
-      autocomplete="name"
-    />
+  try{
+    auth=await import("./fecta-auth.js");
+    const existing=await auth.getCurrentUser().catch(()=>null);
+    if(existing) window.location.href="./member.html";
+  }catch(error){
+    showMessage("Account services are temporarily unavailable. You can still continue as a guest.",true);
+  }
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Email"
-      autocomplete="email"
-    />
+  document.getElementById("googleButton").onclick=async()=>{
+    if(!auth)return;
+    try{showMessage("Opening Google sign in...");const {error}=await auth.signInWithGoogle();if(error)throw error}catch(error){showMessage(error.message,true)}
+  };
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-      autocomplete="current-password"
-    />
-
-    <button class="btn primary" id="signInButton">
-      Sign In
-    </button>
-
-    <button class="btn secondary" id="signUpButton">
-      Create Account
-    </button>
-
-    <a class="btn secondary guest-link" id="guestButton" href="./onboarding.html?guest=1">
-      Continue as Guest
-    </a>
-    <p class="guest-note">Explore privately now. Create an account later to save your progress across devices.</p>
-
-    <div class="message" id="message"></div>
-
-    <p class="small">
-      Your Personal section, My Path, journal,
-      and privacy choices belong to your account.
-    </p>
-
-  </main>
-
-  <script src="./config.js"></script>
-
-  <script type="module">
-
-    import {
-      signInWithGoogle,
-      signInWithEmail,
-      signUpWithEmail,
-      getCurrentUser
-    } from "./fecta-auth.js";
-
-    const message = document.getElementById("message");
-
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const nameInput = document.getElementById("name");
-
-    function showMessage(text) {
-      message.textContent = text || "";
-    }
-
-    document.getElementById("googleButton").onclick =
-      async () => {
-
-        try {
-
-          showMessage("");
-
-          const { error } =
-            await signInWithGoogle();
-
-          if (error) {
-            throw error;
-          }
-
-        } catch (error) {
-
-          showMessage(error.message);
-
-        }
-
-      };
-
-    document.getElementById("signInButton").onclick =
-      async () => {
-
-        try {
-
-          showMessage("");
-
-          const email = emailInput.value.trim();
-          const password = passwordInput.value;
-
-          if (!email || !password) {
-            throw new Error(
-              "Enter your email and password."
-            );
-          }
-
-          const { error } =
-            await signInWithEmail(
-              email,
-              password
-            );
-
-          if (error) {
-            throw error;
-          }
-
-          window.location.href =
-            "./member.html";
-
-        } catch (error) {
-
-          showMessage(error.message);
-
-        }
-
-      };
-
-    document.getElementById("signUpButton").onclick =
-      async () => {
-
-        try {
-
-          showMessage("");
-
-          const email = emailInput.value.trim();
-          const password = passwordInput.value;
-          const fullName = nameInput.value.trim();
-
-          if (!email || !password) {
-            throw new Error(
-              "Enter an email and password."
-            );
-          }
-
-          const { data, error } =
-            await signUpWithEmail(
-              email,
-              password,
-              fullName
-            );
-
-          if (error) {
-            throw error;
-          }
-
-          if (data.session) {
-
-            window.location.href =
-              "./onboarding.html";
-
-          } else {
-
-            showMessage(
-              "Account created. Check your email to confirm your account."
-            );
-
-          }
-
-        } catch (error) {
-
-          showMessage(error.message);
-
-        }
-
-      };
-
-    const existingUser =
-      await getCurrentUser().catch(() => null);
-
-    if (existingUser) {
-      window.location.href =
-        "./member.html";
-    }
-
-  </script>
-
+  submitButton.onclick=async()=>{
+    if(!auth){showMessage("Account services are temporarily unavailable. Continue as a guest for now.",true);return}
+    const email=emailInput.value.trim();const password=passwordInput.value;const fullName=nameInput.value.trim();
+    if(!email||!password){showMessage("Enter your email address and password.",true);return}
+    if(mode==="create"&&password.length<8){showMessage("Create a password with at least 8 characters.",true);return}
+    submitButton.disabled=true;
+    try{
+      if(mode==="create"){
+        const {data,error}=await auth.signUpWithEmail(email,password,fullName);if(error)throw error;
+        if(data.session){window.location.href="./onboarding.html"}else{showMessage("Account created. Check your email and confirm your address before signing in.")}
+      }else{
+        const {error}=await auth.signInWithEmail(email,password);if(error)throw error;window.location.href="./member.html";
+      }
+    }catch(error){showMessage(error.message,true)}finally{submitButton.disabled=false}
+  };
+  passwordInput.addEventListener("keydown",event=>{if(event.key==="Enter")submitButton.click()});
+</script>
 </body>
 </html>
