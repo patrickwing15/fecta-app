@@ -447,7 +447,11 @@
       const average = goals.length
         ? goals.reduce((sum, goal) => sum + Number(goal.progress_percent || 0), 0) / goals.length
         : 0;
-      const overall = Math.round(25 + average * 0.75);
+      const completed = currentData?.achievements?.length || 0;
+      const overall = Math.min(
+        100,
+        Math.round(25 + completed * 25 + average * 0.5)
+      );
       document.getElementById("overallProgress").style.width = overall + "%";
       document.getElementById("overallPercent").textContent = overall + "%";
     }
