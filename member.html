@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Fecta</title>\n  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
+  <title>My Fecta</title>
+  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
 
   <style>
     :root {
@@ -328,6 +329,14 @@
         <div class="actions">
 
           <button
+            class="btn primary"
+            id="saveAccountButton"
+            style="display:none"
+          >
+            Create an Account to Save
+          </button>
+
+          <button
             class="btn secondary"
             id="signOutButton"
           >
@@ -370,10 +379,22 @@
 
     }
 
+    const guestProfile =
+      JSON.parse(
+        localStorage.getItem("fecta_guest_profile") || "null"
+      );
+
+    const isGuest = Boolean(guestProfile);
+
+    if (isGuest) {
+      document.getElementById("saveAccountButton").style.display =
+        "inline-block";
+    }
+
     try {
 
       const data =
-        await loadMemberHome();
+        guestProfile || await loadMemberHome();
 
       if (!data) {
 
@@ -501,11 +522,22 @@
     }
 
     document.getElementById(
+      "saveAccountButton"
+    ).onclick = () => {
+      window.location.href = "./signin.html";
+    };
+
+    document.getElementById(
       "signOutButton"
     ).onclick =
       async () => {
 
-        await signOut();
+        if (isGuest) {
+          localStorage.removeItem("fecta_guest_mode");
+          localStorage.removeItem("fecta_guest_profile");
+        } else {
+          await signOut();
+        }
 
         window.location.href =
           "./signin.html";
