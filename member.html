@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Fecta</title>
+  <title>My Fecta — Dashboard</title>
+  <meta name="description" content="Your Fecta path, goals, progress, reflections, and next step.">
+  <meta name="theme-color" content="#05080c">
   <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
 
   <style>
@@ -38,7 +40,10 @@
     }
 
     .logo { display: inline-flex; text-decoration: none; }
-    .logo img { display: block; width: 164px; height: 78px; object-fit: contain; }
+    .logo img { display: block; width: 150px; height: 70px; object-fit: contain; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .home-link { color:var(--muted); text-decoration:none; font-size:14px; }
+    .home-link:hover { color:white; }
 
     .kicker {
       margin-top: 26px;
@@ -160,6 +165,9 @@
     .reflection { display:none; margin-top:14px; padding:14px; border-radius:14px; background:#08121a; border:1px solid #294155; }
     .reflection.open { display:block; }
     .reflection textarea { width:100%; min-height:82px; resize:vertical; padding:11px; border-radius:10px; border:1px solid #294155; background:#060b10; color:white; margin:8px 0; }
+    .site-footer { margin-top:30px; padding-top:20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; color:var(--muted); font-size:12px; }
+    .site-footer a { color:var(--muted); margin-right:12px; }
+    :focus-visible { outline:3px solid var(--blue2); outline-offset:3px; }
 
     @media (max-width: 760px) {
       .grid {
@@ -181,9 +189,12 @@
 
   <main class="wrap">
 
-    <a class="logo" href="./" aria-label="Fecta Fitness home">
-      <img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness">
-    </a>
+    <div class="topbar">
+      <a class="logo" href="./" aria-label="Fecta home">
+        <img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness">
+      </a>
+      <a class="home-link" href="./">← Fecta home</a>
+    </div>
 
     <div class="kicker">
       Personal
@@ -193,9 +204,8 @@
       Welcome back.
     </h1>
 
-    <p>
-      Your direction, growth, and community journey
-      are connected to your own Fecta account.
+    <p id="accountSummary">
+      Your direction, growth, goals, and community journey are kept together here.
     </p>
 
     <div class="grid">
@@ -221,7 +231,7 @@
 
           <button
             class="btn primary"
-            onclick="window.location.href='./onboarding.html'"
+            id="updatePathButton"
           >
             Update My Path
           </button>
@@ -325,7 +335,7 @@
 
         <div class="reflection" id="reflectionBox">
           <strong>What changed or what did you learn?</strong>
-          <textarea id="reflectionInput" maxlength="500" placeholder="Write one short reflection..."></textarea>
+          <textarea id="reflectionInput" maxlength="500" aria-label="Reflection" placeholder="Write one short reflection..."></textarea>
           <button class="btn primary mini" id="saveReflectionButton">Save Reflection</button>
         </div>
 
@@ -368,7 +378,12 @@
 
     </div>
 
-    <div class="error" id="error"></div>
+    <div class="error" id="error" role="status" aria-live="polite"></div>
+
+    <footer class="site-footer">
+      <span>© 2026 Fecta</span>
+      <span><a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="./health-disclaimer.html">Health disclaimer</a></span>
+    </footer>
 
   </main>
 
@@ -425,7 +440,14 @@
     if (isGuest) {
       document.getElementById("saveAccountButton").style.display =
         "inline-block";
+      document.getElementById("accountSummary").textContent =
+        "Guest progress is private on this device. Create an account when you want to save across devices.";
     }
+
+    document.getElementById("updatePathButton").onclick = () => {
+      window.location.href =
+        isGuest ? "./onboarding.html?guest=1" : "./onboarding.html";
+    };
 
     function nextStepFor(direction) {
       const steps = {
@@ -649,8 +671,12 @@
 
     } catch (error) {
 
-      errorBox.textContent =
-        error.message;
+      if (!isGuest) {
+        window.location.href = "./signin.html";
+      } else {
+        errorBox.textContent =
+          "Your dashboard could not load. Return to Start Here and try again.";
+      }
 
     }
 
