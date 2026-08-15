@@ -142,10 +142,18 @@
       font-style: italic;
     }
 
-    .error {
-      margin-top: 16px;
-      color: #ffb6b6;
-    }
+    .error { margin-top: 16px; color: #ffb6b6; }
+    .progress-track { height: 10px; overflow: hidden; border-radius: 999px; background: #172530; margin-top: 12px; }
+    .progress-fill { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--blue2)); transition: width .25s ease; }
+    .progress-copy { display:flex; justify-content:space-between; gap:12px; margin-top:8px; color:var(--muted); font-size:13px; }
+    .goal-create { display:flex; gap:8px; margin:14px 0; }
+    .goal-create input { flex:1; min-width:0; padding:11px 12px; border-radius:10px; border:1px solid #294155; background:#060b10; color:white; }
+    .goal { padding:13px 0; border-bottom:1px solid #182632; }
+    .goal:last-child { border-bottom:0; }
+    .goal-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .goal-actions { display:flex; gap:7px; margin-top:9px; flex-wrap:wrap; }
+    .mini { padding:7px 9px; font-size:12px; }
+    .daily-step { color:var(--text); font-size:18px; line-height:1.5; }
 
     @media (max-width: 760px) {
       .grid {
@@ -197,6 +205,11 @@
         </h2>
 
         <p id="stage"></p>
+
+        <div class="progress-track" aria-label="Overall path progress">
+          <div class="progress-fill" id="overallProgress"></div>
+        </div>
+        <div class="progress-copy"><span>Overall progress</span><strong id="overallPercent">25%</strong></div>
 
         <div class="actions">
 
@@ -283,12 +296,13 @@
           Active Goals
         </div>
 
+        <div class="goal-create">
+          <input id="goalInput" maxlength="120" placeholder="Add one clear goal..." aria-label="New goal">
+          <button class="btn primary mini" id="addGoalButton">Add</button>
+        </div>
+
         <div id="goals">
-
-          <p class="empty">
-            No active goals yet.
-          </p>
-
+          <p class="empty">No active goals yet.</p>
         </div>
 
       </section>
@@ -316,14 +330,11 @@
         </div>
 
         <h2>
-          Keep the path simple.
+          One useful action for today.
         </h2>
 
-        <p>
-          Fecta will eventually use your path,
-          interests, local community, events,
-          knowledge, and opportunities to suggest
-          one useful next action.
+        <p class="daily-step" id="dailyNextStep">
+          Loading your next step...
         </p>
 
         <div class="actions">
@@ -359,6 +370,9 @@
 
     let loadMemberHome = null;
     let signOut = null;
+    let createGoal = null;
+    let updateGoalProgress = null;
+    let currentData = null;
 
     const errorBox =
       document.getElementById("error");
@@ -389,6 +403,8 @@
         const auth = await import("./fecta-auth.js");
         loadMemberHome = auth.loadMemberHome;
         signOut = auth.signOut;
+        createGoal = auth.createGoal;
+        updateGoalProgress = auth.updateGoalProgress;
       } catch (error) {
         errorBox.textContent =
           "The account connection is temporarily unavailable.";
@@ -400,10 +416,111 @@
         "inline-block";
     }
 
+    function nextStepFor(direction) {
+      const steps = {
+        "Better movement": "Complete 10 minutes of controlled movement and note what feels stronger or restricted.",
+        "Clearer direction": "Write down three strengths you have used successfully in real life.",
+        "More connection": "Choose one local place, event, or person you could connect with this week.",
+        "More energy": "Take a 10-minute walk, drink water, and note your energy before and after.",
+        "Stronger habits": "Choose one habit small enough to repeat tomorrow.",
+        "Learn something new": "Spend 15 focused minutes learning one practical skill."
+      };
+      return steps[direction] || "Choose one small action that moves your current direction forward.";
+    }
+
+    function saveGuestData() {
+      localStorage.setItem("fecta_guest_profile", JSON.stringify(currentData));
+    }
+
+    function updateProgress(goals) {
+      const average = goals.length
+        ? goals.reduce((sum, goal) => sum + Number(goal.progress_percent || 0), 0) / goals.length
+        : 0;
+      const overall = Math.round(25 + average * 0.75);
+      document.getElementById("overallProgress").style.width = overall + "%";
+      document.getElementById("overallPercent").textContent = overall + "%";
+    }
+
+    function renderGoals(goals) {
+      const box = document.getElementById("goals");
+      box.textContent = "";
+
+      if (!goals.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent = "No active goals yet. Add one small goal above.";
+        box.appendChild(empty);
+        updateProgress([]);
+        return;
+      }
+
+      goals.forEach((goal) => {
+        const row = document.createElement("div");
+        row.className = "goal";
+
+        const head = document.createElement("div");
+        head.className = "goal-head";
+        const title = document.createElement("strong");
+        title.textContent = goal.title;
+        const amount = document.createElement("span");
+        amount.textContent = Number(goal.progress_percent || 0) + "%";
+        head.append(title, amount);
+
+        const track = document.createElement("div");
+        track.className = "progress-track";
+        const fill = document.createElement("div");
+        fill.className = "progress-fill";
+        fill.style.width = Number(goal.progress_percent || 0) + "%";
+        track.appendChild(fill);
+
+        const actions = document.createElement("div");
+        actions.className = "goal-actions";
+
+        const advance = document.createElement("button");
+        advance.className = "btn secondary mini";
+        advance.textContent = "+25%";
+        advance.onclick = () => changeGoal(goal, Math.min(100, Number(goal.progress_percent || 0) + 25));
+
+        const complete = document.createElement("button");
+        complete.className = "btn primary mini";
+        complete.textContent = "Complete";
+        complete.onclick = () => changeGoal(goal, 100);
+
+        actions.append(advance, complete);
+        row.append(head, track, actions);
+        box.appendChild(row);
+      });
+
+      updateProgress(goals);
+    }
+
+    async function changeGoal(goal, progress) {
+      if (isGuest) {
+        goal.progress_percent = progress;
+        if (progress === 100) {
+          currentData.achievements = currentData.achievements || [];
+          currentData.achievements.unshift({
+            title: "Goal completed",
+            description: goal.title
+          });
+          currentData.goals = currentData.goals.filter((item) => item.id !== goal.id);
+        }
+        saveGuestData();
+        renderGoals(currentData.goals);
+        return;
+      }
+
+      await updateGoalProgress(goal.id, progress);
+      currentData = await loadMemberHome();
+      renderGoals(currentData.goals || []);
+    }
+
     try {
 
       const data =
         guestProfile || await loadMemberHome();
+
+      currentData = data;
 
       if (!data) {
 
@@ -466,30 +583,10 @@
             ? `Current stage: ${readable(path.current_stage)}`
             : "Use Start Here to build your first Fecta path.";
 
-        if (data.goals?.length) {
+        renderGoals(data.goals || []);
 
-          document.getElementById(
-            "goals"
-          ).innerHTML =
-            data.goals
-              .map((goal) => {
-
-                return `
-                  <div class="row">
-                    <span>
-                      ${goal.title}
-                    </span>
-
-                    <strong>
-                      ${goal.progress_percent}%
-                    </strong>
-                  </div>
-                `;
-
-              })
-              .join("");
-
-        }
+        document.getElementById("dailyNextStep").textContent =
+          nextStepFor(path?.direction);
 
         if (
           data.achievements?.length
@@ -529,6 +626,38 @@
         error.message;
 
     }
+
+    document.getElementById("addGoalButton").onclick =
+      async () => {
+        const input = document.getElementById("goalInput");
+        const title = input.value.trim();
+
+        if (!title || !currentData) return;
+
+        if (isGuest) {
+          currentData.goals = currentData.goals || [];
+          currentData.goals.push({
+            id: "guest-" + Date.now(),
+            title,
+            progress_percent: 0,
+            status: "active"
+          });
+          saveGuestData();
+          renderGoals(currentData.goals);
+        } else {
+          await createGoal(title);
+          currentData = await loadMemberHome();
+          renderGoals(currentData.goals || []);
+        }
+
+        input.value = "";
+      };
+
+    document.getElementById("goalInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        document.getElementById("addGoalButton").click();
+      }
+    });
 
     document.getElementById(
       "saveAccountButton"
