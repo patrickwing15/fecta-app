@@ -96,4 +96,5 @@ function toggleGuide(){chat.classList.toggle('open')}function openGuide(){chat.c
 function heroAsk(){const v=document.getElementById('heroInput').value.trim(),r=document.getElementById('heroResult');if(!v){notify('Write one thing you are trying to build.');return}r.innerHTML='<div class="kicker">Fecta asks</div><h3>What feels like the biggest barrier right now?</h3><div class="pills"><span class="pill">Time</span><span class="pill">Energy</span><span class="pill">Confidence</span><span class="pill">Too many choices</span></div>';notify('Fecta asked one clarifying question.')}
 function chatAsk(){const v=document.getElementById('chatInput').value.trim();notify(v?'Fecta created one realistic next step.':'Tell Fecta what you are working through.')}
 </script>
+<!-- Fecta functional journey build -->
 </body></html>
