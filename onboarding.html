@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fecta Start Here</title>\n  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
+  <title>Fecta Start Here</title>
+  <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
 
   <style>
     :root {
@@ -472,7 +473,10 @@
     const user =
       await getCurrentUser().catch(() => null);
 
-    if (!user) {
+    const guestMode =
+      localStorage.getItem("fecta_guest_mode") === "true";
+
+    if (!user && !guestMode) {
       window.location.href =
         "./signin.html";
     }
@@ -559,6 +563,21 @@
 
       });
 
+    const startingDirection =
+      localStorage.getItem("fecta_starting_direction");
+
+    if (startingDirection) {
+      const matchingDirection =
+        [...document.querySelectorAll("#direction .single")]
+          .find((item) =>
+            item.textContent.trim() === startingDirection
+          );
+
+      if (matchingDirection) {
+        matchingDirection.classList.add("selected");
+      }
+    }
+
     document.getElementById("finish").onclick =
       async () => {
 
@@ -569,7 +588,9 @@
           [...document.querySelectorAll(
             "#interests .selected"
           )].map((item) =>
-            item.textContent.trim()
+            item.textContent
+              .replace(/^[^A-Za-z0-9]+/, "")
+              .trim()
           );
 
         const direction =
@@ -614,20 +635,43 @@
           message.textContent =
             "Building your path...";
 
-          await saveOnboarding({
-            interests,
-            direction,
-            community:
-              document.getElementById(
-                "community"
-              ).value,
-            ageRange:
-              document.getElementById(
-                "age"
-              ).value,
-            aiMode,
-            privacyMode
-          });
+          const community =
+            document.getElementById("community").value;
+          const ageRange =
+            document.getElementById("age").value;
+
+          if (guestMode && !user) {
+            localStorage.setItem(
+              "fecta_guest_profile",
+              JSON.stringify({
+                profile: {
+                  display_name: "Guest",
+                  community,
+                  age_range: ageRange,
+                  ai_mode: aiMode,
+                  privacy_mode: privacyMode
+                },
+                path: {
+                  direction,
+                  current_stage: "discover"
+                },
+                interests,
+                goals: [],
+                achievements: []
+              })
+            );
+          } else {
+            await saveOnboarding({
+              interests,
+              direction,
+              community,
+              ageRange,
+              aiMode,
+              privacyMode
+            });
+          }
+
+          localStorage.removeItem("fecta_starting_direction");
 
           message.textContent =
             "Your Fecta path is ready.";
