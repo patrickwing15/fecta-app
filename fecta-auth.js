@@ -182,6 +182,44 @@ export async function saveOnboarding(payload) {
   return true;
 }
 
+// CREATE A GOAL
+export async function createGoal(title) {
+  const user = await getCurrentUser();
+  if (!user) throw new Error("You must be signed in.");
+
+  const { data, error } = await supabase
+    .from("goals")
+    .insert({
+      profile_id: user.id,
+      title,
+      status: "active",
+      progress_percent: 0
+    })
+    .select("*")
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+// UPDATE GOAL PROGRESS
+export async function updateGoalProgress(goalId, progressPercent) {
+  const progress = Math.max(0, Math.min(100, progressPercent));
+  const { data, error } = await supabase
+    .from("goals")
+    .update({
+      progress_percent: progress,
+      status: progress === 100 ? "completed" : "active",
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", goalId)
+    .select("*")
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
 // LOAD PERSONAL + MY PATH
 export async function loadMemberHome() {
   const user = await getCurrentUser();
