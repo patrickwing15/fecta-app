@@ -154,6 +154,12 @@
     .goal-actions { display:flex; gap:7px; margin-top:9px; flex-wrap:wrap; }
     .mini { padding:7px 9px; font-size:12px; }
     .daily-step { color:var(--text); font-size:18px; line-height:1.5; }
+    .growth-item { padding:12px 0; border-bottom:1px solid #182632; }
+    .growth-item:last-child { border-bottom:0; }
+    .growth-item h3 { margin:0 0 5px; }
+    .reflection { display:none; margin-top:14px; padding:14px; border-radius:14px; background:#08121a; border:1px solid #294155; }
+    .reflection.open { display:block; }
+    .reflection textarea { width:100%; min-height:82px; resize:vertical; padding:11px; border-radius:10px; border:1px solid #294155; background:#060b10; color:white; margin:8px 0; }
 
     @media (max-width: 760px) {
       .grid {
@@ -314,11 +320,13 @@
         </div>
 
         <div id="achievements">
+          <p class="empty">No achievements yet.</p>
+        </div>
 
-          <p class="empty">
-            No achievements yet.
-          </p>
-
+        <div class="reflection" id="reflectionBox">
+          <strong>What changed or what did you learn?</strong>
+          <textarea id="reflectionInput" maxlength="500" placeholder="Write one short reflection..."></textarea>
+          <button class="btn primary mini" id="saveReflectionButton">Save Reflection</button>
         </div>
 
       </section>
@@ -372,7 +380,9 @@
     let signOut = null;
     let createGoal = null;
     let updateGoalProgress = null;
+    let saveAchievementReflection = null;
     let currentData = null;
+    let pendingAchievement = null;
 
     const errorBox =
       document.getElementById("error");
@@ -405,6 +415,7 @@
         signOut = auth.signOut;
         createGoal = auth.createGoal;
         updateGoalProgress = auth.updateGoalProgress;
+        saveAchievementReflection = auth.saveAchievementReflection;
       } catch (error) {
         errorBox.textContent =
           "The account connection is temporarily unavailable.";
@@ -494,25 +505,65 @@
       updateProgress(goals);
     }
 
+    function renderAchievements(items) {
+      const box = document.getElementById("achievements");
+      box.textContent = "";
+
+      if (!items?.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent = "No achievements yet.";
+        box.appendChild(empty);
+        return;
+      }
+
+      items.slice(0, 5).forEach((achievement) => {
+        const item = document.createElement("div");
+        item.className = "growth-item";
+        const title = document.createElement("h3");
+        title.textContent = achievement.title || "Growth recorded";
+        const description = document.createElement("p");
+        description.textContent = achievement.description || "";
+        item.append(title, description);
+        box.appendChild(item);
+      });
+    }
+
+    function openReflection(achievement) {
+      pendingAchievement = achievement;
+      document.getElementById("reflectionInput").value = "";
+      document.getElementById("reflectionBox").classList.add("open");
+      document.getElementById("reflectionInput").focus();
+    }
+
     async function changeGoal(goal, progress) {
       if (isGuest) {
         goal.progress_percent = progress;
         if (progress === 100) {
           currentData.achievements = currentData.achievements || [];
-          currentData.achievements.unshift({
+          const achievement = {
+            id: "achievement-" + Date.now(),
             title: "Goal completed",
             description: goal.title
-          });
+          };
+          currentData.achievements.unshift(achievement);
           currentData.goals = currentData.goals.filter((item) => item.id !== goal.id);
+          openReflection(achievement);
         }
         saveGuestData();
         renderGoals(currentData.goals);
+        renderAchievements(currentData.achievements || []);
         return;
       }
 
-      await updateGoalProgress(goal.id, progress);
+      const result = await updateGoalProgress(goal.id, progress);
       currentData = await loadMemberHome();
       renderGoals(currentData.goals || []);
+      renderAchievements(currentData.achievements || []);
+
+      if (progress === 100 && result?.achievement) {
+        openReflection(result.achievement);
+      }
     }
 
     try {
@@ -588,35 +639,7 @@
         document.getElementById("dailyNextStep").textContent =
           nextStepFor(path?.direction);
 
-        if (
-          data.achievements?.length
-        ) {
-
-          document.getElementById(
-            "achievements"
-          ).innerHTML =
-            data.achievements
-              .map((achievement) => {
-
-                return `
-                  <div>
-                    <h3>
-                      ${achievement.title}
-                    </h3>
-
-                    <p>
-                      ${
-                        achievement.description ||
-                        ""
-                      }
-                    </p>
-                  </div>
-                `;
-
-              })
-              .join("");
-
-        }
+        renderAchievements(data.achievements || []);
 
       }
 
@@ -626,6 +649,32 @@
         error.message;
 
     }
+
+    document.getElementById("saveReflectionButton").onclick =
+      async () => {
+        const reflection =
+          document.getElementById("reflectionInput").value.trim();
+
+        if (!reflection || !pendingAchievement) return;
+
+        if (isGuest) {
+          const item = currentData.achievements.find(
+            (achievement) => achievement.id === pendingAchievement.id
+          );
+          if (item) item.description = reflection;
+          saveGuestData();
+        } else {
+          await saveAchievementReflection(
+            pendingAchievement.id,
+            reflection
+          );
+          currentData = await loadMemberHome();
+        }
+
+        renderAchievements(currentData.achievements || []);
+        document.getElementById("reflectionBox").classList.remove("open");
+        pendingAchievement = null;
+      };
 
     document.getElementById("addGoalButton").onclick =
       async () => {
