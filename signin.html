@@ -152,7 +152,7 @@
       Create Account
     </button>
 
-    <button class="btn secondary" id="guestButton">
+    <button class="btn secondary" id="guestButton" onclick="continueAsGuest()">
       Continue as Guest
     </button>
     <p class="guest-note">Explore privately now. Create an account later to save your progress across devices.</p>
@@ -165,6 +165,13 @@
     </p>
 
   </main>
+
+  <script>
+    function continueAsGuest() {
+      localStorage.setItem("fecta_guest_mode", "true");
+      window.location.href = "./onboarding.html";
+    }
+  </script>
 
   <script src="./config.js"></script>
 
@@ -294,11 +301,6 @@
         }
 
       };
-
-    document.getElementById("guestButton").onclick = () => {
-      localStorage.setItem("fecta_guest_mode", "true");
-      window.location.href = "./onboarding.html";
-    };
 
     const existingUser =
       await getCurrentUser().catch(() => null);
