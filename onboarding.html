@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fecta Start Here</title>
+  <title>Start Your Path — Fecta</title>
+  <meta name="description" content="Choose your first Fecta path in five simple steps.">
+  <meta name="theme-color" content="#05080c">
   <link rel="icon" href="./assets/fecta-fitness-logo.svg" type="image/svg+xml" />
 
   <style>
@@ -77,6 +79,8 @@
     .step.active {
       display: block;
     }
+
+    .step-status { display:flex; justify-content:space-between; gap:12px; color:var(--muted); font-size:13px; margin-top:18px; }
 
     .progress {
       display: grid;
@@ -187,7 +191,7 @@
 
     <a class="brand" href="./" aria-label="Fecta Fitness home"><img src="./assets/fecta-fitness-logo.svg" alt="Fecta Fitness"></a>
 
-    <div class="kicker">Start Here</div>
+    <div class="kicker" id="journeyMode">Start Here</div>
 
     <h1>Build your first Fecta path.</h1>
 
@@ -195,7 +199,8 @@
       Keep it simple. You can change these choices later.
     </p>
 
-    <div class="progress" id="progress">
+    <div class="step-status"><span id="stepLabel">Step 1 of 5</span><span>About 2 minutes</span></div>
+    <div class="progress" id="progress" role="progressbar" aria-label="Onboarding progress" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1">
       <span class="active"></span>
       <span></span>
       <span></span>
@@ -311,7 +316,7 @@
             Community
           </label>
 
-          <select id="community">
+          <select id="community" aria-label="Community">
             <option>Georgina</option>
             <option>Keswick</option>
             <option>Sutton</option>
@@ -327,7 +332,7 @@
             Age range
           </label>
 
-          <select id="age">
+          <select id="age" aria-label="Age range">
             <option>Under 13</option>
             <option>13–17</option>
             <option selected>18–29</option>
@@ -437,6 +442,10 @@
           Journal entries remain private unless
           you explicitly change their visibility.
         </p>
+        <p style="font-size:12px">
+          Fecta provides guidance and educational tools, not medical diagnosis or emergency support.
+          Review the <a href="./health-disclaimer.html" style="color:var(--blue2)">Health Disclaimer</a>.
+        </p>
 
         <div class="actions">
 
@@ -476,6 +485,11 @@
       localStorage.setItem("fecta_guest_mode", "true");
     }
 
+    if (guestMode) {
+      document.getElementById("journeyMode").textContent =
+        "Guest setup · private on this device";
+    }
+
     let user = null;
     let saveOnboarding = null;
 
@@ -504,6 +518,13 @@
       [...document.querySelectorAll("#progress span")];
 
     function renderStep() {
+
+      document.getElementById("stepLabel").textContent =
+        `Step ${currentStep + 1} of 5`;
+      document.getElementById("progress").setAttribute(
+        "aria-valuenow",
+        String(currentStep + 1)
+      );
 
       steps.forEach((step, index) => {
         step.classList.toggle(
