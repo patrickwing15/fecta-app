@@ -101,6 +101,7 @@
 
     .small { font-size: 12px; }
     .guest-note { text-align: center; margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+    .guest-link { display: block; text-align: center; text-decoration: none; }
   </style>
 </head>
 
@@ -152,9 +153,9 @@
       Create Account
     </button>
 
-    <button class="btn secondary" id="guestButton" onclick="continueAsGuest()">
+    <a class="btn secondary guest-link" id="guestButton" href="./onboarding.html?guest=1">
       Continue as Guest
-    </button>
+    </a>
     <p class="guest-note">Explore privately now. Create an account later to save your progress across devices.</p>
 
     <div class="message" id="message"></div>
@@ -165,13 +166,6 @@
     </p>
 
   </main>
-
-  <script>
-    function continueAsGuest() {
-      localStorage.setItem("fecta_guest_mode", "true");
-      window.location.href = "./onboarding.html";
-    }
-  </script>
 
   <script src="./config.js"></script>
 
