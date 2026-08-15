@@ -465,8 +465,16 @@
 
   <script type="module">
 
+    const guestRequested =
+      new URLSearchParams(window.location.search).get("guest") === "1";
+
     const guestMode =
+      guestRequested ||
       localStorage.getItem("fecta_guest_mode") === "true";
+
+    if (guestRequested) {
+      localStorage.setItem("fecta_guest_mode", "true");
+    }
 
     let user = null;
     let saveOnboarding = null;
