@@ -94,7 +94,8 @@ export async function saveOnboarding(payload) {
   // Update member profile
   const { error: profileError } = await supabase
     .from("profiles")
-    .update({
+    .upsert({
+      id: user.id,
       display_name:
         payload.displayName ||
         user.user_metadata?.full_name ||
@@ -104,8 +105,7 @@ export async function saveOnboarding(payload) {
       ai_mode: payload.aiMode,
       privacy_mode: payload.privacyMode,
       updated_at: new Date().toISOString()
-    })
-    .eq("id", user.id);
+    }, { onConflict: "id" });
 
   if (profileError) {
     throw profileError;
