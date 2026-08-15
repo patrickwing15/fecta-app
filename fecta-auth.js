@@ -217,6 +217,38 @@ export async function updateGoalProgress(goalId, progressPercent) {
     .single();
 
   if (error) throw error;
+
+  let achievement = null;
+
+  if (progress === 100) {
+    const user = await getCurrentUser();
+    const { data: unlocked, error: achievementError } = await supabase
+      .from("achievements")
+      .insert({
+        profile_id: user.id,
+        title: "Goal completed",
+        description: data.title,
+        unlocked_at: new Date().toISOString()
+      })
+      .select("*")
+      .single();
+
+    if (achievementError) throw achievementError;
+    achievement = unlocked;
+  }
+
+  return { goal: data, achievement };
+}
+
+export async function saveAchievementReflection(achievementId, reflection) {
+  const { data, error } = await supabase
+    .from("achievements")
+    .update({ description: reflection })
+    .eq("id", achievementId)
+    .select("*")
+    .single();
+
+  if (error) throw error;
   return data;
 }
 
