@@ -357,10 +357,8 @@
 
   <script type="module">
 
-    import {
-      loadMemberHome,
-      signOut
-    } from "./fecta-auth.js";
+    let loadMemberHome = null;
+    let signOut = null;
 
     const errorBox =
       document.getElementById("error");
@@ -385,6 +383,17 @@
       );
 
     const isGuest = Boolean(guestProfile);
+
+    if (!isGuest) {
+      try {
+        const auth = await import("./fecta-auth.js");
+        loadMemberHome = auth.loadMemberHome;
+        signOut = auth.signOut;
+      } catch (error) {
+        errorBox.textContent =
+          "The account connection is temporarily unavailable.";
+      }
+    }
 
     if (isGuest) {
       document.getElementById("saveAccountButton").style.display =
