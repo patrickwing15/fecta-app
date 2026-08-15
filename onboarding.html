@@ -465,16 +465,22 @@
 
   <script type="module">
 
-    import {
-      getCurrentUser,
-      saveOnboarding
-    } from "./fecta-auth.js";
-
-    const user =
-      await getCurrentUser().catch(() => null);
-
     const guestMode =
       localStorage.getItem("fecta_guest_mode") === "true";
+
+    let user = null;
+    let saveOnboarding = null;
+
+    if (!guestMode) {
+      try {
+        const auth = await import("./fecta-auth.js");
+        user = await auth.getCurrentUser().catch(() => null);
+        saveOnboarding = auth.saveOnboarding;
+      } catch (error) {
+        document.body.innerHTML =
+          '<main class="wrap"><div class="card"><h1>Account connection unavailable.</h1><p>You can return to sign in and continue as a guest.</p><button class="btn primary" onclick="window.location.href=\'./signin.html\'">Back to Sign In</button></div></main>';
+      }
+    }
 
     if (!user && !guestMode) {
       window.location.href =
