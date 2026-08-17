@@ -253,6 +253,47 @@ export async function saveAchievementReflection(achievementId, reflection) {
 }
 
 
+
+export async function updateGoalTitle(goalId, title) {
+  const { data, error } = await supabase
+    .from("goals")
+    .update({ title, updated_at: new Date().toISOString() })
+    .eq("id", goalId)
+    .select("*")
+    .single();
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteGoal(goalId) {
+  const { error } = await supabase
+    .from("goals")
+    .delete()
+    .eq("id", goalId);
+  if (error) throw error;
+  return true;
+}
+
+export async function updateMilestone(milestoneId, title, description) {
+  const { data, error } = await supabase
+    .from("achievements")
+    .update({ title, description })
+    .eq("id", milestoneId)
+    .select("*")
+    .single();
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteMilestone(milestoneId) {
+  const { error } = await supabase
+    .from("achievements")
+    .delete()
+    .eq("id", milestoneId);
+  if (error) throw error;
+  return true;
+}
+
 export async function createMilestone(title, description) {
   const user = await getCurrentUser();
   if (!user) throw new Error("You must be signed in.");
