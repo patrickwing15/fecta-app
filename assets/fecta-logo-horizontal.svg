@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590 180" role="img" aria-labelledby="title desc">
   <title id="title">Fecta</title>
-  <desc id="desc">Cyan geometric Fecta symbol beside the word Fecta.</desc>
-  <g fill="#18A7DF">
-    <path d="M20 26h112v28H20zM20 76h115v29h-32v55H74v-55H20z"/>
-    <path d="M166 26h112v28H166zM163 76h115v29h-55v55h-29v-55h-31z"/>
+  <desc id="desc">The original blue Fecta geometric mark beside the word Fecta.</desc>
+  <g fill="#109FD3">
+    <path d="M20 25h112v28H20z"/>
+    <path d="M20 75h115v84h-29v-55H20z"/>
+    <path d="M166 25h112v28H166z"/>
+    <path d="M163 75h115v29h-86v55h-29z"/>
   </g>
-  <text x="322" y="116" fill="#FFFFFF" font-family="Arial,Helvetica,sans-serif" font-size="72" font-weight="700" letter-spacing="5">FECTA</text>
+  <text x="322" y="116" fill="#FFFFFF" font-family="Arial,Helvetica,sans-serif" font-size="72" font-weight="500" letter-spacing="4">FECTA</text>
 </svg>
