@@ -1,8 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 180" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 180" role="img" aria-labelledby="title desc">
   <title id="title">Fecta</title>
+  <desc id="desc">The original blue Fecta geometric mark.</desc>
   <rect width="300" height="180" rx="28" fill="#05080C"/>
-  <g fill="#18A7DF">
-    <path d="M20 25h112v28H20zM20 75h115v29h-32v55H74v-55H20z"/>
-    <path d="M166 25h112v28H166zM163 75h115v29h-55v55h-29v-55h-31z"/>
+  <g fill="#109FD3">
+    <path d="M20 25h112v28H20z"/>
+    <path d="M20 75h115v84h-29v-55H20z"/>
+    <path d="M166 25h112v28H166z"/>
+    <path d="M163 75h115v29h-86v55h-29z"/>
   </g>
 </svg>
