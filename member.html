@@ -1,767 +1,92 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Fecta — Dashboard</title>
-  <meta name="description" content="Your Fecta path, goals, progress, reflections, and next step.">
-  <meta name="theme-color" content="#05080c">
-  <link rel="icon" href="./assets/fecta-mark.svg" type="image/svg+xml">
-
-  <style>
-    :root {
-      --bg: #05080c;
-      --surface: #0b131c;
-      --line: #203443;
-      --text: #f8fbff;
-      --muted: #92a6b5;
-      --blue: #1ea8ff;
-      --blue2: #7bd5ff;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 82% 8%, rgba(30,168,255,.12), transparent 25%),
-        linear-gradient(180deg, #030507, #081019);
-      font-family: Arial, sans-serif;
-      color: var(--text);
-    }
-
-    .wrap {
-      max-width: 1100px;
-      margin: auto;
-      padding: 32px 18px 70px;
-    }
-
-    .logo { display: inline-flex; text-decoration: none; }
-    .logo img { display: block; width: 205px; height: 52px; object-fit: contain; object-position: left center; }
-    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; }
-    .home-link { color:var(--muted); text-decoration:none; font-size:14px; }
-    .home-link:hover { color:white; }
-
-    .kicker {
-      margin-top: 26px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .14em;
-      color: var(--blue2);
-      font-weight: 900;
-    }
-
-    h1 {
-      font-size: 44px;
-      letter-spacing: -.04em;
-      margin: 8px 0;
-    }
-
-    h2 {
-      font-size: 28px;
-      margin: 8px 0;
-    }
-
-    h3 {
-      margin: 7px 0;
-    }
-
-    p {
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .card {
-      padding: 22px;
-      border-radius: 18px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-    }
-
-    .s4 {
-      grid-column: span 4;
-    }
-
-    .s6 {
-      grid-column: span 6;
-    }
-
-    .s8 {
-      grid-column: span 8;
-    }
-
-    .s12 {
-      grid-column: span 12;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 11px 0;
-      border-bottom: 1px solid #182632;
-    }
-
-    .row:last-child {
-      border-bottom: 0;
-    }
-
-    .btn {
-      padding: 11px 15px;
-      border-radius: 11px;
-      border: 0;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .primary {
-      background: var(--blue);
-      color: #00131f;
-    }
-
-    .secondary {
-      background: #121d27;
-      color: white;
-      border: 1px solid #294155;
-    }
-
-    .actions {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-
-    .empty {
-      color: var(--muted);
-      font-style: italic;
-    }
-
-    .error { margin-top: 16px; color: #ffb6b6; }
-    .progress-track { height: 10px; overflow: hidden; border-radius: 999px; background: #172530; margin-top: 12px; }
-    .progress-fill { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--blue2)); transition: width .25s ease; }
-    .progress-copy { display:flex; justify-content:space-between; gap:12px; margin-top:8px; color:var(--muted); font-size:13px; }
-    .goal-create { display:flex; gap:8px; margin:14px 0; }
-    .goal-create input { flex:1; min-width:0; padding:11px 12px; border-radius:10px; border:1px solid #294155; background:#060b10; color:white; }
-    .goal { padding:13px 0; border-bottom:1px solid #182632; }
-    .goal:last-child { border-bottom:0; }
-    .goal-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
-    .goal-actions { display:flex; gap:7px; margin-top:9px; flex-wrap:wrap; }
-    .mini { padding:7px 9px; font-size:12px; }
-    .daily-step { color:var(--text); font-size:18px; line-height:1.5; }
-    .growth-item { padding:12px 0; border-bottom:1px solid #182632; }
-    .growth-item:last-child { border-bottom:0; }
-    .growth-item h3 { margin:0 0 5px; }
-    .reflection { display:none; margin-top:14px; padding:14px; border-radius:14px; background:#08121a; border:1px solid #294155; }
-    .reflection.open { display:block; }
-    .reflection textarea { width:100%; min-height:82px; resize:vertical; padding:11px; border-radius:10px; border:1px solid #294155; background:#060b10; color:white; margin:8px 0; }
-    .site-footer { margin-top:30px; padding-top:20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; color:var(--muted); font-size:12px; }
-    .site-footer a { color:var(--muted); margin-right:12px; }
-    :focus-visible { outline:3px solid var(--blue2); outline-offset:3px; }
-
-    @media (max-width: 760px) {
-      .grid {
-        display: block;
-      }
-
-      .card {
-        margin-bottom: 12px;
-      }
-
-      h1 {
-        font-size: 36px;
-      }
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Fecta — My Path</title>
+<meta name="description" content="Your next step, personal path, milestones, opportunities, and reviews in one clear place.">
+<meta name="theme-color" content="#05080c"><link rel="icon" href="./assets/fecta-mark.svg" type="image/svg+xml">
+<style>
+:root{--bg:#05080c;--surface:#0b131c;--surface2:#0f1c27;--line:#203443;--text:#f8fbff;--muted:#9fb1be;--blue:#1ea8ff;--blue2:#7bd5ff;--green:#6fe3aa}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 82% 8%,rgba(30,168,255,.12),transparent 25%),linear-gradient(180deg,#030507,#081019);font-family:Arial,sans-serif;color:var(--text)}
+button,input,textarea{font:inherit}.wrap{max-width:1120px;margin:auto;padding:26px 18px 72px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px}.logo{display:inline-flex}.logo img{display:block;width:205px;height:52px;object-fit:contain;object-position:left center}.home-link{color:var(--muted);text-decoration:none;font-size:14px}
+.member-nav{position:sticky;top:0;z-index:10;margin:22px 0 30px;padding:9px;display:flex;gap:7px;overflow-x:auto;background:rgba(8,16,24,.94);border:1px solid var(--line);border-radius:15px;backdrop-filter:blur(12px)}.member-nav a{white-space:nowrap;text-decoration:none;color:#c2d0d9;padding:10px 13px;border-radius:10px;font-size:13px;font-weight:700}.member-nav a:hover,.member-nav a:first-child{background:#142330;color:white}
+.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--blue2);font-weight:900}h1{font-size:clamp(37px,5vw,52px);letter-spacing:-.045em;margin:8px 0}h2{font-size:29px;letter-spacing:-.025em;margin:8px 0}h3{margin:6px 0}p{color:var(--muted);line-height:1.55}
+.dashboard-head{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:20px}.dashboard-head p{max-width:600px;margin-bottom:0}.overall{min-width:220px}.progress-track{height:10px;overflow:hidden;border-radius:999px;background:#172530;margin-top:10px}.progress-fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--blue2));transition:width .25s}.progress-copy{display:flex;justify-content:space-between;gap:12px;margin-top:7px;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{padding:23px;border-radius:19px;background:linear-gradient(180deg,var(--surface),#080e14);border:1px solid var(--line)}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+.focus{border-color:#2d566e;background:radial-gradient(circle at 90% 10%,rgba(30,168,255,.12),transparent 35%),var(--surface)}.daily-step{color:var(--text);font-size:20px;line-height:1.5}.direction{font-size:25px;color:white;margin:8px 0}.stage{color:var(--muted)}
+.btn{min-height:42px;padding:10px 14px;border-radius:11px;border:0;font-weight:800;cursor:pointer}.primary{background:var(--blue);color:#00131f}.secondary{background:#121d27;color:white;border:1px solid #294155}.ghost{background:transparent;color:var(--blue2);border:1px solid #294155}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+label{display:block;color:#dce7ed;font-weight:700;font-size:14px;margin:13px 0 6px}input,textarea{width:100%;padding:12px;border-radius:11px;border:1px solid #365166;background:#f7fbff;color:#07121a}input::placeholder,textarea::placeholder{color:#627582}textarea{min-height:84px;resize:vertical}
+.goal-create{display:flex;gap:8px;margin:14px 0}.goal-create input{min-width:0}.goal-create .btn{flex:0 0 auto}.goal,.milestone,.opportunity{padding:14px 0;border-bottom:1px solid #182632}.goal:last-child,.milestone:last-child,.opportunity:last-child{border-bottom:0}.goal-head{display:flex;justify-content:space-between;gap:12px}.goal-actions{display:flex;gap:7px;margin-top:9px}.mini{padding:7px 9px;min-height:34px;font-size:12px}.empty{color:var(--muted);font-style:italic}
+.milestone-form{display:none;margin-top:16px;padding:17px;border-radius:15px;background:#08131c;border:1px solid #294155}.milestone-form.open{display:block}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.milestone small{color:var(--blue2)}.milestone p{margin:6px 0}.opportunity h3{font-size:18px}.opportunity span{display:inline-block;margin-top:5px;color:var(--blue2);font-size:13px;font-weight:700}.review-box{padding:16px;border-radius:14px;background:#08131c;border:1px solid #294155}.review-list{display:grid;gap:10px;margin-top:14px}.review-item{display:grid;grid-template-columns:28px 1fr;gap:10px}.review-dot{width:26px;height:26px;display:grid;place-items:center;border-radius:9px;background:rgba(30,168,255,.15);color:var(--blue2);font-weight:900}.review-item strong{display:block}.review-item span{color:var(--muted);font-size:14px;line-height:1.45}
+.success{color:var(--green);margin-top:10px}.error{color:#ffb6b6;margin-top:10px}.site-footer{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:12px}.site-footer a{color:var(--muted);margin-right:12px}
+:focus-visible{outline:3px solid var(--blue2);outline-offset:3px}
+@media(max-width:800px){.grid{display:block}.card{margin-bottom:12px}.dashboard-head{display:block}.overall{margin-top:20px}.form-grid{grid-template-columns:1fr}.member-nav{margin-left:-6px;margin-right:-6px}}
+</style>
 </head>
-
-<body>
-
-  <main class="wrap">
-
-    <div class="topbar">
-      <a class="logo" href="./" aria-label="Fecta home">
-        <img src="./assets/fecta-logo-horizontal.svg" alt="Fecta">
-      </a>
-      <a class="home-link" href="./">← Fecta home</a>
-    </div>
-
-    <div class="kicker">
-      Personal
-    </div>
-
-    <h1 id="welcome">
-      Welcome back.
-    </h1>
-
-    <p id="accountSummary">
-      Your direction, growth, goals, and community journey are kept together here.
-    </p>
-
-    <div class="grid">
-
-      <section class="card s8">
-
-        <div class="kicker">
-          My Path
-        </div>
-
-        <h2 id="direction">
-          Loading your path...
-        </h2>
-
-        <p id="stage"></p>
-
-        <div class="progress-track" aria-label="Overall path progress">
-          <div class="progress-fill" id="overallProgress"></div>
-        </div>
-        <div class="progress-copy"><span>Overall progress</span><strong id="overallPercent">25%</strong></div>
-
-        <div class="actions">
-
-          <button
-            class="btn primary"
-            id="updatePathButton"
-          >
-            Update My Path
-          </button>
-
-        </div>
-
-      </section>
-
-      <section class="card s4">
-
-        <div class="kicker">
-          Community
-        </div>
-
-        <h2 id="community">
-          —
-        </h2>
-
-        <p>
-          Your local brief, events, and opportunities
-          can use this setting.
-        </p>
-
-      </section>
-
-      <section class="card s4">
-
-        <div class="kicker">
-          AI Guide
-        </div>
-
-        <h2 id="aiMode">
-          —
-        </h2>
-
-        <p>
-          You remain in control of when Fecta AI helps.
-        </p>
-
-      </section>
-
-      <section class="card s4">
-
-        <div class="kicker">
-          Privacy
-        </div>
-
-        <h2 id="privacyMode">
-          —
-        </h2>
-
-        <p>
-          Your account controls what stays private
-          and what may be shared.
-        </p>
-
-      </section>
-
-      <section class="card s4">
-
-        <div class="kicker">
-          Age Experience
-        </div>
-
-        <h2 id="ageRange">
-          —
-        </h2>
-
-        <p>
-          Fecta uses this to adjust language and learning depth.
-        </p>
-
-      </section>
-
-      <section class="card s6">
-
-        <div class="kicker">
-          Active Goals
-        </div>
-
-        <div class="goal-create">
-          <input id="goalInput" maxlength="120" placeholder="Add one clear goal..." aria-label="New goal">
-          <button class="btn primary mini" id="addGoalButton">Add</button>
-        </div>
-
-        <div id="goals">
-          <p class="empty">No active goals yet.</p>
-        </div>
-
-      </section>
-
-      <section class="card s6">
-
-        <div class="kicker">
-          Recent Growth
-        </div>
-
-        <div id="achievements">
-          <p class="empty">No achievements yet.</p>
-        </div>
-
-        <div class="reflection" id="reflectionBox">
-          <strong>What changed or what did you learn?</strong>
-          <textarea id="reflectionInput" maxlength="500" aria-label="Reflection" placeholder="Write one short reflection..."></textarea>
-          <button class="btn primary mini" id="saveReflectionButton">Save Reflection</button>
-        </div>
-
-      </section>
-
-      <section class="card s12">
-
-        <div class="kicker">
-          Next Step
-        </div>
-
-        <h2>
-          One useful action for today.
-        </h2>
-
-        <p class="daily-step" id="dailyNextStep">
-          Loading your next step...
-        </p>
-
-        <div class="actions">
-
-          <button
-            class="btn primary"
-            id="saveAccountButton"
-            style="display:none"
-          >
-            Create an Account to Save
-          </button>
-
-          <button
-            class="btn secondary"
-            id="signOutButton"
-          >
-            Sign Out
-          </button>
-
-        </div>
-
-      </section>
-
-    </div>
-
-    <div class="error" id="error" role="status" aria-live="polite"></div>
-
-    <footer class="site-footer">
-      <span>© 2026 Fecta</span>
-      <span><a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="./health-disclaimer.html">Health disclaimer</a></span>
-    </footer>
-
-  </main>
-
-  <script src="./config.js"></script>
-
-  <script type="module">
-
-    let loadMemberHome = null;
-    let signOut = null;
-    let createGoal = null;
-    let updateGoalProgress = null;
-    let saveAchievementReflection = null;
-    let currentData = null;
-    let pendingAchievement = null;
-
-    const errorBox =
-      document.getElementById("error");
-
-    function readable(value) {
-
-      if (!value) {
-        return "Not set";
-      }
-
-      return value
-        .replaceAll("_", " ")
-        .replace(/\b\w/g, (letter) =>
-          letter.toUpperCase()
-        );
-
-    }
-
-    const guestProfile =
-      JSON.parse(
-        localStorage.getItem("fecta_guest_profile") || "null"
-      );
-
-    const isGuest = Boolean(guestProfile);
-
-    if (!isGuest) {
-      try {
-        const auth = await import("./fecta-auth.js");
-        loadMemberHome = auth.loadMemberHome;
-        signOut = auth.signOut;
-        createGoal = auth.createGoal;
-        updateGoalProgress = auth.updateGoalProgress;
-        saveAchievementReflection = auth.saveAchievementReflection;
-      } catch (error) {
-        errorBox.textContent =
-          "The account connection is temporarily unavailable.";
-      }
-    }
-
-    if (isGuest) {
-      document.getElementById("saveAccountButton").style.display =
-        "inline-block";
-      document.getElementById("accountSummary").textContent =
-        "Guest progress is private on this device. Create an account when you want to save across devices.";
-    }
-
-    document.getElementById("updatePathButton").onclick = () => {
-      window.location.href =
-        isGuest ? "./onboarding.html?guest=1" : "./onboarding.html";
-    };
-
-    function nextStepFor(direction) {
-      const steps = {
-        "Better movement": "Complete 10 minutes of controlled movement and note what feels stronger or restricted.",
-        "Clearer direction": "Write down three strengths you have used successfully in real life.",
-        "More connection": "Choose one local place, event, or person you could connect with this week.",
-        "More energy": "Take a 10-minute walk, drink water, and note your energy before and after.",
-        "Stronger habits": "Choose one habit small enough to repeat tomorrow.",
-        "Learn something new": "Spend 15 focused minutes learning one practical skill."
-      };
-      return steps[direction] || "Choose one small action that moves your current direction forward.";
-    }
-
-    function saveGuestData() {
-      localStorage.setItem("fecta_guest_profile", JSON.stringify(currentData));
-    }
-
-    function updateProgress(goals) {
-      const average = goals.length
-        ? goals.reduce((sum, goal) => sum + Number(goal.progress_percent || 0), 0) / goals.length
-        : 0;
-      const completed = currentData?.achievements?.length || 0;
-      const overall = Math.min(
-        100,
-        Math.round(25 + completed * 25 + average * 0.5)
-      );
-      document.getElementById("overallProgress").style.width = overall + "%";
-      document.getElementById("overallPercent").textContent = overall + "%";
-    }
-
-    function renderGoals(goals) {
-      const box = document.getElementById("goals");
-      box.textContent = "";
-
-      if (!goals.length) {
-        const empty = document.createElement("p");
-        empty.className = "empty";
-        empty.textContent = "No active goals yet. Add one small goal above.";
-        box.appendChild(empty);
-        updateProgress([]);
-        return;
-      }
-
-      goals.forEach((goal) => {
-        const row = document.createElement("div");
-        row.className = "goal";
-
-        const head = document.createElement("div");
-        head.className = "goal-head";
-        const title = document.createElement("strong");
-        title.textContent = goal.title;
-        const amount = document.createElement("span");
-        amount.textContent = Number(goal.progress_percent || 0) + "%";
-        head.append(title, amount);
-
-        const track = document.createElement("div");
-        track.className = "progress-track";
-        const fill = document.createElement("div");
-        fill.className = "progress-fill";
-        fill.style.width = Number(goal.progress_percent || 0) + "%";
-        track.appendChild(fill);
-
-        const actions = document.createElement("div");
-        actions.className = "goal-actions";
-
-        const advance = document.createElement("button");
-        advance.className = "btn secondary mini";
-        advance.textContent = "+25%";
-        advance.onclick = () => changeGoal(goal, Math.min(100, Number(goal.progress_percent || 0) + 25));
-
-        const complete = document.createElement("button");
-        complete.className = "btn primary mini";
-        complete.textContent = "Complete";
-        complete.onclick = () => changeGoal(goal, 100);
-
-        actions.append(advance, complete);
-        row.append(head, track, actions);
-        box.appendChild(row);
-      });
-
-      updateProgress(goals);
-    }
-
-    function renderAchievements(items) {
-      const box = document.getElementById("achievements");
-      box.textContent = "";
-
-      if (!items?.length) {
-        const empty = document.createElement("p");
-        empty.className = "empty";
-        empty.textContent = "No achievements yet.";
-        box.appendChild(empty);
-        return;
-      }
-
-      items.slice(0, 5).forEach((achievement) => {
-        const item = document.createElement("div");
-        item.className = "growth-item";
-        const title = document.createElement("h3");
-        title.textContent = achievement.title || "Growth recorded";
-        const description = document.createElement("p");
-        description.textContent = achievement.description || "";
-        item.append(title, description);
-        box.appendChild(item);
-      });
-    }
-
-    function openReflection(achievement) {
-      pendingAchievement = achievement;
-      document.getElementById("reflectionInput").value = "";
-      document.getElementById("reflectionBox").classList.add("open");
-      document.getElementById("reflectionInput").focus();
-    }
-
-    async function changeGoal(goal, progress) {
-      if (isGuest) {
-        goal.progress_percent = progress;
-        if (progress === 100) {
-          currentData.achievements = currentData.achievements || [];
-          const achievement = {
-            id: "achievement-" + Date.now(),
-            title: "Goal completed",
-            description: goal.title
-          };
-          currentData.achievements.unshift(achievement);
-          currentData.goals = currentData.goals.filter((item) => item.id !== goal.id);
-          openReflection(achievement);
-        }
-        saveGuestData();
-        renderGoals(currentData.goals);
-        renderAchievements(currentData.achievements || []);
-        return;
-      }
-
-      const result = await updateGoalProgress(goal.id, progress);
-      currentData = await loadMemberHome();
-      renderGoals(currentData.goals || []);
-      renderAchievements(currentData.achievements || []);
-
-      if (progress === 100 && result?.achievement) {
-        openReflection(result.achievement);
-      }
-    }
-
-    try {
-
-      const data =
-        guestProfile || await loadMemberHome();
-
-      currentData = data;
-
-      if (!data) {
-
-        window.location.href =
-          "./signin.html";
-
-      } else {
-
-        const profile =
-          data.profile;
-
-        const path =
-          data.path;
-
-        if (profile?.display_name) {
-
-          document.getElementById(
-            "welcome"
-          ).textContent =
-            `Welcome back, ${profile.display_name}.`;
-
-        }
-
-        document.getElementById(
-          "community"
-        ).textContent =
-          profile?.community ||
-          "Not set";
-
-        document.getElementById(
-          "ageRange"
-        ).textContent =
-          profile?.age_range ||
-          "Not set";
-
-        document.getElementById(
-          "aiMode"
-        ).textContent =
-          readable(
-            profile?.ai_mode
-          );
-
-        document.getElementById(
-          "privacyMode"
-        ).textContent =
-          readable(
-            profile?.privacy_mode
-          );
-
-        document.getElementById(
-          "direction"
-        ).textContent =
-          path?.direction ||
-          "Choose your first direction";
-
-        document.getElementById(
-          "stage"
-        ).textContent =
-          path
-            ? `Current stage: ${readable(path.current_stage)}`
-            : "Use Start Here to build your first Fecta path.";
-
-        renderGoals(data.goals || []);
-
-        document.getElementById("dailyNextStep").textContent =
-          nextStepFor(path?.direction);
-
-        renderAchievements(data.achievements || []);
-
-      }
-
-    } catch (error) {
-
-      if (!isGuest) {
-        window.location.href = "./signin.html";
-      } else {
-        errorBox.textContent =
-          "Your dashboard could not load. Return to Start Here and try again.";
-      }
-
-    }
-
-    document.getElementById("saveReflectionButton").onclick =
-      async () => {
-        const reflection =
-          document.getElementById("reflectionInput").value.trim();
-
-        if (!reflection || !pendingAchievement) return;
-
-        if (isGuest) {
-          const item = currentData.achievements.find(
-            (achievement) => achievement.id === pendingAchievement.id
-          );
-          if (item) item.description = reflection;
-          saveGuestData();
-        } else {
-          await saveAchievementReflection(
-            pendingAchievement.id,
-            reflection
-          );
-          currentData = await loadMemberHome();
-        }
-
-        renderAchievements(currentData.achievements || []);
-        document.getElementById("reflectionBox").classList.remove("open");
-        pendingAchievement = null;
-      };
-
-    document.getElementById("addGoalButton").onclick =
-      async () => {
-        const input = document.getElementById("goalInput");
-        const title = input.value.trim();
-
-        if (!title || !currentData) return;
-
-        if (isGuest) {
-          currentData.goals = currentData.goals || [];
-          currentData.goals.push({
-            id: "guest-" + Date.now(),
-            title,
-            progress_percent: 0,
-            status: "active"
-          });
-          saveGuestData();
-          renderGoals(currentData.goals);
-        } else {
-          await createGoal(title);
-          currentData = await loadMemberHome();
-          renderGoals(currentData.goals || []);
-        }
-
-        input.value = "";
-      };
-
-    document.getElementById("goalInput").addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        document.getElementById("addGoalButton").click();
-      }
-    });
-
-    document.getElementById(
-      "saveAccountButton"
-    ).onclick = () => {
-      window.location.href = "./signin.html";
-    };
-
-    document.getElementById(
-      "signOutButton"
-    ).onclick =
-      async () => {
-
-        if (isGuest) {
-          localStorage.removeItem("fecta_guest_mode");
-          localStorage.removeItem("fecta_guest_profile");
-        } else {
-          await signOut();
-        }
-
-        window.location.href =
-          "./signin.html";
-
-      };
-
-  </script>
-
-</body>
-</html>
+<body><main class="wrap">
+<div class="topbar"><a class="logo" href="./" aria-label="Fecta home"><img src="./assets/fecta-logo-horizontal.svg" alt="Fecta"></a><a class="home-link" href="./">← Public website</a></div>
+<nav class="member-nav" aria-label="Member sections"><a href="#today">Today</a><a href="#path">My Path</a><a href="#milestones">Milestones</a><a href="#opportunities">Opportunities</a><a href="#review">Review</a></nav>
+<div class="dashboard-head"><div><div class="kicker">My Fecta</div><h1 id="welcome">Welcome back.</h1><p id="accountSummary">Your direction, actions, meaningful moments, and opportunities are kept together here.</p></div><div class="overall"><div class="progress-copy"><span>Path completion</span><strong id="overallPercent">25%</strong></div><div class="progress-track" aria-label="Overall path progress"><div class="progress-fill" id="overallProgress"></div></div></div></div>
+<div class="grid">
+<section class="card s7 focus" id="today"><div class="kicker">Today</div><h2>One useful action—not a full life overhaul.</h2><p class="daily-step" id="dailyNextStep">Loading your next step...</p><div class="actions"><button class="btn primary" id="startTodayButton">I’m working on this</button><button class="btn secondary" id="changeStepButton">Change my direction</button></div><div id="todayStatus" class="success" role="status"></div></section>
+<section class="card s5" id="path"><div class="kicker">My Path</div><div class="direction" id="direction">Loading your path...</div><p class="stage" id="stage"></p><div class="actions"><button class="btn secondary" id="updatePathButton">Update my path</button></div></section>
+
+<section class="card s6"><div class="kicker">Active Goals</div><h2>Move one thing forward.</h2><div class="goal-create"><input id="goalInput" maxlength="120" placeholder="Add one clear goal..." aria-label="New goal"><button class="btn primary mini" id="addGoalButton">Add</button></div><div id="goals"><p class="empty">No active goals yet.</p></div></section>
+
+<section class="card s6" id="milestones"><div class="kicker">Important Moments</div><h2>Record what mattered.</h2><p>A milestone can be a win, a lesson, a difficult moment you handled, or a new door you noticed.</p><button class="btn primary" id="openMilestoneButton">Record a milestone</button>
+<div class="milestone-form" id="milestoneForm">
+<label for="milestoneTitle">What happened?</label><input id="milestoneTitle" maxlength="100" placeholder="Give this moment a short name">
+<div class="form-grid"><div><label for="milestoneWhy">Why was it important?</label><textarea id="milestoneWhy" maxlength="350" placeholder="What made this meaningful?"></textarea></div><div><label for="milestoneLearn">What did you learn?</label><textarea id="milestoneLearn" maxlength="350" placeholder="What do you understand now?"></textarea></div></div>
+<label for="milestoneNext">What opportunity or next step did it reveal?</label><textarea id="milestoneNext" maxlength="350" placeholder="What could this lead to?"></textarea>
+<div class="actions"><button class="btn primary" id="saveMilestoneButton">Save milestone</button><button class="btn ghost" id="cancelMilestoneButton">Cancel</button></div><div id="milestoneStatus" role="status"></div>
+</div><div id="milestoneList"><p class="empty">No milestones recorded yet.</p></div></section>
+
+<section class="card s6" id="opportunities"><div class="kicker">Opportunity Growth</div><h2>Where this direction could lead.</h2><p>These are starting possibilities—not instructions or promises. Choose what feels relevant.</p><div id="opportunityList"></div></section>
+
+<section class="card s8" id="review"><div class="kicker">Review</div><h2>See the meaning behind your progress.</h2><div class="review-box"><p id="reviewSummary">Complete a goal or record a milestone to begin seeing your pattern.</p><div class="review-list">
+<div class="review-item"><span class="review-dot">1</span><div><strong>What is changing?</strong><span id="reviewChange">No change recorded yet.</span></div></div>
+<div class="review-item"><span class="review-dot">2</span><div><strong>What should continue?</strong><span id="reviewContinue">Keep your next step small enough to repeat.</span></div></div>
+<div class="review-item"><span class="review-dot">3</span><div><strong>What comes next?</strong><span id="reviewNext">Your opportunity list will adjust to your direction.</span></div></div>
+</div></div></section>
+
+<section class="card s4"><div class="kicker">Account</div><h2 id="accountType">Your controls</h2><p id="accountDetails">Choose when AI helps and what information you share.</p><div class="actions"><button class="btn primary" id="saveAccountButton" style="display:none">Create an account to save</button><button class="btn secondary" id="signOutButton">Sign out</button></div></section>
+</div>
+<div class="error" id="error" role="status" aria-live="polite"></div>
+<footer class="site-footer"><span>© 2026 Fecta</span><span><a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="./health-disclaimer.html">Health disclaimer</a></span></footer>
+</main>
+<script src="./config.js"></script>
+<script type="module">
+let loadMemberHome,signOut,createGoal,updateGoalProgress,createMilestone,currentData;
+const errorBox=document.getElementById("error");
+const guestProfile=JSON.parse(localStorage.getItem("fecta_guest_profile")||"null");
+const isGuest=Boolean(guestProfile);
+if(!isGuest){try{const auth=await import("./fecta-auth.js");({loadMemberHome,signOut,createGoal,updateGoalProgress,createMilestone}=auth)}catch(e){errorBox.textContent="The account connection is temporarily unavailable."}}
+if(isGuest){document.getElementById("saveAccountButton").style.display="inline-block";document.getElementById("accountType").textContent="Guest mode";document.getElementById("accountDetails").textContent="Your progress is private on this device. Create an account to save across devices.";document.getElementById("accountSummary").textContent="Your guest path is private on this device. Record meaningful progress now and create an account later if you choose."}
+
+const opportunities={
+"Better movement":[["Build body awareness","Use body check-ins and controlled movement to understand what needs attention."],["Explore local movement","Look for a suitable gym, recreation program, walking group, or coach."],["Share useful progress","A movement milestone could become encouragement or practical learning for someone else."]],
+"Clearer direction":[["Run a small experiment","Try a short course, conversation, volunteer role, or project before making a large commitment."],["Map your strengths","Connect repeated strengths to skills, work, service, leadership, or creative paths."],["Meet someone in the field","Use a local interview or community connection to learn what a path is actually like."]],
+"More connection":[["Join one local activity","Choose an event, club, class, community centre, or volunteer opportunity."],["Contribute a strength","Offer a skill, idea, time, or support where it could be useful."],["Build a community mission","Turn a local need into one realistic action with other people."]],
+"More energy":[["Create an energy baseline","Notice sleep, movement, meals, stress, and the times you feel most capable."],["Choose supportive resources","Explore appropriate health, recreation, or wellbeing support."],["Build a repeatable rhythm","Keep one energy-supporting action small enough to continue."]],
+"Stronger habits":[["Design your environment","Make the useful choice easier to see and complete."],["Build a seven-day proof","Repeat one small action long enough to learn what helps."],["Use the habit somewhere real","Connect the habit to a larger goal, role, or community contribution."]],
+"Learn something new":[["Choose one practical skill","Select a skill that supports your direction rather than collecting information."],["Find a place to practise","Use a course, mentor, club, project, or local organization."],["Create or teach something","Turn learning into a useful demonstration, resource, or contribution."]]
+};
+function nextStepFor(d){return({"Better movement":"Complete 10 minutes of controlled movement and note what feels stronger or restricted.","Clearer direction":"Write down three strengths you have used successfully in real life.","More connection":"Choose one local place, event, or person you could connect with this week.","More energy":"Take a 10-minute walk, drink water, and note your energy before and after.","Stronger habits":"Choose one habit small enough to repeat tomorrow.","Learn something new":"Spend 15 focused minutes learning one practical skill."})[d]||"Choose one small action that moves your current direction forward."}
+function saveGuest(){localStorage.setItem("fecta_guest_profile",JSON.stringify(currentData))}
+function renderOpportunities(direction){const box=document.getElementById("opportunityList");box.textContent="";(opportunities[direction]||opportunities["Clearer direction"]).forEach(([title,copy])=>{const el=document.createElement("div");el.className="opportunity";const h=document.createElement("h3");h.textContent=title;const p=document.createElement("p");p.textContent=copy;const s=document.createElement("span");s.textContent="Explore this possibility →";el.append(h,p,s);box.append(el)});document.getElementById("reviewNext").textContent=(opportunities[direction]||opportunities["Clearer direction"])[0][0]+" may be a useful next possibility."}
+function updateProgress(){const goals=currentData?.goals||[],ach=currentData?.achievements||[];const avg=goals.length?goals.reduce((s,g)=>s+Number(g.progress_percent||0),0)/goals.length:0;const parts=25+(goals.length?15:0)+Math.min(25,avg*.25)+Math.min(35,ach.length*12);const value=Math.min(100,Math.round(parts));document.getElementById("overallProgress").style.width=value+"%";document.getElementById("overallPercent").textContent=value+"%"}
+function renderGoals(goals){const box=document.getElementById("goals");box.textContent="";if(!goals.length){box.innerHTML='<p class="empty">No active goals yet. Add one small goal above.</p>';updateProgress();return}goals.forEach(goal=>{const row=document.createElement("div");row.className="goal";const head=document.createElement("div");head.className="goal-head";const title=document.createElement("strong");title.textContent=goal.title;const amount=document.createElement("span");amount.textContent=Number(goal.progress_percent||0)+"%";head.append(title,amount);const track=document.createElement("div");track.className="progress-track";const fill=document.createElement("div");fill.className="progress-fill";fill.style.width=Number(goal.progress_percent||0)+"%";track.append(fill);const actions=document.createElement("div");actions.className="goal-actions";for(const [label,value,klass] of [["+25%",Math.min(100,Number(goal.progress_percent||0)+25),"secondary"],["Complete",100,"primary"]]){const b=document.createElement("button");b.className="btn "+klass+" mini";b.textContent=label;b.onclick=()=>changeGoal(goal,value);actions.append(b)}row.append(head,track,actions);box.append(row)});updateProgress()}
+function parseMilestone(item){const parts=(item.description||"").split("\n");return{why:(parts.find(x=>x.startsWith("Why: "))||"").replace("Why: ",""),learn:(parts.find(x=>x.startsWith("Learned: "))||"").replace("Learned: ",""),next:(parts.find(x=>x.startsWith("Next: "))||"").replace("Next: ",""),plain:item.description||""}}
+function renderMilestones(items){const box=document.getElementById("milestoneList");box.textContent="";if(!items?.length){box.innerHTML='<p class="empty">No milestones recorded yet.</p>';updateReview([]);return}items.forEach(item=>{const data=parseMilestone(item),el=document.createElement("article");el.className="milestone";const small=document.createElement("small");small.textContent="Important moment";const h=document.createElement("h3");h.textContent=item.title||"Milestone recorded";const p=document.createElement("p");p.textContent=data.why||data.plain||"Progress recorded.";el.append(small,h,p);if(data.next){const n=document.createElement("p");n.textContent="Opportunity: "+data.next;el.append(n)}box.append(el)});updateReview(items);updateProgress()}
+function updateReview(items){if(!items?.length)return;const data=parseMilestone(items[0]);document.getElementById("reviewSummary").textContent="You have recorded "+items.length+" meaningful moment"+(items.length===1?"":"s")+". Review the newest one before choosing what comes next.";document.getElementById("reviewChange").textContent=data.why||items[0].description||"A meaningful moment has been recorded.";document.getElementById("reviewContinue").textContent=data.learn||"Continue the action that helped create this progress.";if(data.next)document.getElementById("reviewNext").textContent=data.next}
+async function changeGoal(goal,progress){if(isGuest){goal.progress_percent=progress;if(progress===100){currentData.achievements=currentData.achievements||[];currentData.achievements.unshift({id:"achievement-"+Date.now(),title:"Goal completed: "+goal.title,description:"Why: I completed an important step.\nLearned: Progress comes from finishing a clear action.\nNext: Review what this goal now makes possible.",unlocked_at:new Date().toISOString()});currentData.goals=currentData.goals.filter(g=>g.id!==goal.id)}saveGuest()}else{await updateGoalProgress(goal.id,progress);currentData=await loadMemberHome()}renderGoals(currentData.goals||[]);renderMilestones(currentData.achievements||[])}
+try{currentData=guestProfile||await loadMemberHome();if(!currentData){location.href="./signin.html"}else{const p=currentData.profile,path=currentData.path;if(p?.display_name)document.getElementById("welcome").textContent="Welcome back, "+p.display_name+".";document.getElementById("direction").textContent=path?.direction||"Choose your first direction";document.getElementById("stage").textContent=path?"Current stage: "+String(path.current_stage||"discover").replaceAll("_"," "):"Build your first Fecta path to begin.";document.getElementById("dailyNextStep").textContent=nextStepFor(path?.direction);renderGoals(currentData.goals||[]);renderMilestones(currentData.achievements||[]);renderOpportunities(path?.direction)}}catch(e){if(!isGuest)location.href="./signin.html";else errorBox.textContent="Your dashboard could not load. Return to Start Here and try again."}
+document.getElementById("startTodayButton").onclick=()=>{document.getElementById("todayStatus").textContent="Started. Keep it simple, then record what changed.";document.getElementById("goalInput").value=document.getElementById("dailyNextStep").textContent;document.getElementById("goals").scrollIntoView({behavior:"smooth",block:"center"})}
+document.getElementById("changeStepButton").onclick=document.getElementById("updatePathButton").onclick=()=>location.href=isGuest?"./onboarding.html?guest=1":"./onboarding.html";
+document.getElementById("addGoalButton").onclick=async()=>{const input=document.getElementById("goalInput"),title=input.value.trim();if(!title)return;if(isGuest){currentData.goals=currentData.goals||[];currentData.goals.push({id:"guest-"+Date.now(),title,progress_percent:0,status:"active"});saveGuest()}else{await createGoal(title);currentData=await loadMemberHome()}input.value="";renderGoals(currentData.goals||[])};
+document.getElementById("goalInput").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("addGoalButton").click()});
+const form=document.getElementById("milestoneForm");document.getElementById("openMilestoneButton").onclick=()=>{form.classList.add("open");document.getElementById("milestoneTitle").focus()};document.getElementById("cancelMilestoneButton").onclick=()=>form.classList.remove("open");
+document.getElementById("saveMilestoneButton").onclick=async()=>{const title=document.getElementById("milestoneTitle").value.trim(),why=document.getElementById("milestoneWhy").value.trim(),learn=document.getElementById("milestoneLearn").value.trim(),next=document.getElementById("milestoneNext").value.trim(),status=document.getElementById("milestoneStatus");if(!title||!why){status.className="error";status.textContent="Add what happened and why it mattered.";return}const description="Why: "+why+"\nLearned: "+(learn||"Still reflecting.")+"\nNext: "+(next||"Choose the next step after reviewing this moment.");if(isGuest){currentData.achievements=currentData.achievements||[];currentData.achievements.unshift({id:"milestone-"+Date.now(),title,description,unlocked_at:new Date().toISOString()});saveGuest()}else{await createMilestone(title,description);currentData=await loadMemberHome()}["milestoneTitle","milestoneWhy","milestoneLearn","milestoneNext"].forEach(id=>document.getElementById(id).value="");status.className="success";status.textContent="Milestone saved.";renderMilestones(currentData.achievements||[]);setTimeout(()=>{form.classList.remove("open");status.textContent=""},800)};
+document.getElementById("saveAccountButton").onclick=()=>location.href="./signin.html";
+document.getElementById("signOutButton").onclick=async()=>{if(isGuest){localStorage.removeItem("fecta_guest_mode");localStorage.removeItem("fecta_guest_profile")}else await signOut();location.href="./signin.html"};
+</script></body></html>
