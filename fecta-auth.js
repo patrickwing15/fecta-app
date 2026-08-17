@@ -252,6 +252,26 @@ export async function saveAchievementReflection(achievementId, reflection) {
   return data;
 }
 
+
+export async function createMilestone(title, description) {
+  const user = await getCurrentUser();
+  if (!user) throw new Error("You must be signed in.");
+
+  const { data, error } = await supabase
+    .from("achievements")
+    .insert({
+      profile_id: user.id,
+      title,
+      description,
+      unlocked_at: new Date().toISOString()
+    })
+    .select("*")
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
 // LOAD PERSONAL + MY PATH
 export async function loadMemberHome() {
   const user = await getCurrentUser();
@@ -295,7 +315,7 @@ export async function loadMemberHome() {
       .order("unlocked_at", {
         ascending: false
       })
-      .limit(5)
+      .limit(20)
   ]);
 
   const errors = [
