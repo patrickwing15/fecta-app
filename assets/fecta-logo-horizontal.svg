@@ -1,12 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
-  <title id="title">Fecta Fitness</title>
-  <desc id="desc">Cyan geometric Fecta symbol beside the words Fecta Fitness.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590 180" role="img" aria-labelledby="title desc">
+  <title id="title">Fecta</title>
+  <desc id="desc">Cyan geometric Fecta symbol beside the word Fecta.</desc>
   <g fill="#18A7DF">
     <path d="M20 26h112v28H20zM20 76h115v29h-32v55H74v-55H20z"/>
     <path d="M166 26h112v28H166zM163 76h115v29h-55v55h-29v-55h-31z"/>
   </g>
-  <g fill="#FFFFFF" font-family="Arial,Helvetica,sans-serif">
-    <text x="322" y="94" font-size="66" font-weight="700" letter-spacing="3">FECTA</text>
-    <text x="326" y="139" font-size="27" font-weight="500" letter-spacing="12">FITNESS</text>
-  </g>
+  <text x="322" y="116" fill="#FFFFFF" font-family="Arial,Helvetica,sans-serif" font-size="72" font-weight="700" letter-spacing="5">FECTA</text>
 </svg>
