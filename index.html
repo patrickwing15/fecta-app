@@ -3,149 +3,93 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Fecta helps people build capability, find direction, and put their strengths to use in their community.">
+  <meta name="description" content="Fecta helps you understand where you are, choose a direction, take practical steps, and connect your growth with real opportunities.">
   <meta name="theme-color" content="#05080c">
-  <title>Fecta — Build Capability. Find Direction. Put It to Use.</title>
+  <title>Fecta — Know What to Work on Next</title>
   <link rel="icon" href="./assets/fecta-mark.svg" type="image/svg+xml">
   <style>
     :root{--bg:#05080c;--surface:#0b131c;--surface2:#0f1c27;--line:#203443;--text:#f8fbff;--muted:#a8bac7;--blue:#1ea8ff;--blue2:#7bd5ff;--max:1160px}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#030507,#07111a 55%,#05080c);color:var(--text);font-family:Arial,sans-serif}
     a{color:inherit}button,input,textarea{font:inherit}button,a.btn{min-height:44px}.shell{width:min(var(--max),calc(100% - 36px));margin:auto}
     .skip{position:absolute;left:-9999px;top:10px;background:white;color:#00131f;padding:10px;z-index:100}.skip:focus{left:10px}
-    header{position:sticky;top:0;z-index:20;background:rgba(5,8,12,.9);backdrop-filter:blur(14px);border-bottom:1px solid #172632}
+    header{position:sticky;top:0;z-index:20;background:rgba(5,8,12,.92);backdrop-filter:blur(14px);border-bottom:1px solid #172632}
     .nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}.brand img{display:block;width:196px;height:54px;object-fit:contain;object-position:left center}
     .navlinks{display:flex;align-items:center;gap:22px}.navlinks a{text-decoration:none;color:#c8d5df;font-size:14px}.navlinks a:hover{color:white}
     .btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:12px;padding:12px 17px;font-weight:800;text-decoration:none;cursor:pointer}
-    .primary{background:var(--blue);color:#00131f}.secondary{background:#111d27;color:white;border:1px solid #2b4559}.btn:hover{filter:brightness(1.08)}
-    :focus-visible{outline:3px solid var(--blue2);outline-offset:3px}
-    .hero{padding:88px 0 66px}.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:48px;align-items:center}
-    .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue2);font-weight:900}h1{font-size:clamp(44px,6vw,72px);line-height:.98;letter-spacing:-.05em;margin:16px 0 22px}
-    .lead{max-width:690px;font-size:20px;line-height:1.6;color:#bdcbd5}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.micro{font-size:13px;color:var(--muted);margin-top:15px}
-    .guide-card,.card,.step,.community-card{background:linear-gradient(180deg,var(--surface),#080e14);border:1px solid var(--line)}
-    .guide-card{padding:24px;border-radius:26px;box-shadow:0 30px 80px rgba(0,0,0,.35)}.guide-card h2{font-size:30px;margin:9px 0}.guide-card p{color:var(--muted);line-height:1.55}
-    .guide-card textarea{width:100%;min-height:112px;resize:vertical;background:#060b10;border:1px solid #2a4558;border-radius:14px;color:white;padding:14px;margin:8px 0}
-    .guide-result{display:none;margin-top:14px;padding:16px;border-radius:14px;background:rgba(30,168,255,.1);border:1px solid rgba(123,213,255,.3)}.guide-result.open{display:block}.guide-result strong{display:block;font-size:19px;margin-bottom:6px}.guide-result span{display:block;line-height:1.5}.guide-result .btn{width:max-content}
-    section{padding:68px 0}.section-head{max-width:750px;margin-bottom:28px}.section-head h2{font-size:clamp(34px,4vw,48px);letter-spacing:-.035em;margin:9px 0}.section-head p{font-size:18px;line-height:1.6;color:var(--muted)}
-    .paths{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{padding:26px;border-radius:22px}.path-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:rgba(30,168,255,.13);color:var(--blue2);font-size:21px}.card h3{font-size:27px;margin:18px 0 9px}.card p{color:var(--muted);line-height:1.6;min-height:100px}.card .btn{width:100%}
+    .primary{background:var(--blue);color:#00131f}.secondary{background:#111d27;color:white;border:1px solid #2b4559}.btn:hover{filter:brightness(1.08)}:focus-visible{outline:3px solid var(--blue2);outline-offset:3px}
+    .hero{padding:86px 0 64px}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:46px;align-items:center}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue2);font-weight:900}
+    h1{font-size:clamp(45px,6vw,72px);line-height:1;letter-spacing:-.05em;margin:16px 0 22px}.lead{max-width:690px;font-size:20px;line-height:1.6;color:#c4d0d9}
+    .problem{margin-top:22px;padding:17px 19px;border-left:3px solid var(--blue);background:rgba(30,168,255,.07);color:#d6e1e8;line-height:1.55;border-radius:0 14px 14px 0}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}.micro{font-size:13px;color:var(--muted);margin-top:14px}
+    .promise{padding:27px;border-radius:26px;background:linear-gradient(180deg,var(--surface2),#080e14);border:1px solid #29475a;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+    .promise h2{font-size:31px;margin:10px 0}.promise-list{display:grid;gap:12px;margin-top:20px}.promise-item{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start;padding:14px;border-radius:15px;background:#09131b;border:1px solid #1d3444}
+    .check{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:rgba(30,168,255,.15);color:var(--blue2);font-weight:900}.promise-item strong{display:block;margin:2px 0 5px}.promise-item span{color:var(--muted);line-height:1.45;font-size:14px}
+    section{padding:66px 0}.section-head{max-width:760px;margin-bottom:28px}.section-head h2{font-size:clamp(34px,4vw,48px);letter-spacing:-.035em;margin:9px 0}.section-head p{font-size:18px;line-height:1.6;color:var(--muted)}
+    .outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,.step,.example,.community-card{background:linear-gradient(180deg,var(--surface),#080e14);border:1px solid var(--line)}
+    .card{padding:26px;border-radius:22px}.icon{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:rgba(30,168,255,.13);color:var(--blue2);font-size:21px}.card h3{font-size:25px;margin:18px 0 9px}.card p{color:var(--muted);line-height:1.6;margin-bottom:0}
     .loop{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step{padding:22px;border-radius:20px}.num{width:35px;height:35px;display:grid;place-items:center;border-radius:11px;background:rgba(30,168,255,.15);color:var(--blue2);font-weight:900}.step h3{margin:17px 0 7px}.step p{color:var(--muted);line-height:1.55;margin:0}
-    .community{display:grid;grid-template-columns:.85fr 1.15fr;gap:18px}.community-card{padding:25px;border-radius:22px}.community-card h3{font-size:26px;margin:8px 0}.community-card p{color:var(--muted);line-height:1.6}.places{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.place{padding:13px;border-radius:13px;background:#09131b;border:1px solid #1d3444}.place small{display:block;color:var(--muted);margin-top:4px}
-    .notice{margin-top:14px;font-size:12px;color:var(--muted)}.cta{padding:30px 0 86px}.cta-box{text-align:center;padding:42px 24px;border-radius:28px;background:radial-gradient(circle at 80% 10%,rgba(30,168,255,.2),transparent 30%),var(--surface);border:1px solid #2b4a60}.cta-box h2{font-size:clamp(32px,4vw,46px);margin:8px 0}.cta-box p{color:var(--muted);font-size:18px}
+    .examples{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.example{padding:22px;border-radius:19px}.example .from{color:#dce7ed;line-height:1.5;font-weight:700}.arrow{color:var(--blue2);margin:13px 0}.example .to{color:var(--muted);line-height:1.55}
+    .community-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.community-card{padding:27px;border-radius:22px}.community-card h3{font-size:27px;margin:9px 0}.community-card p{color:var(--muted);line-height:1.6}.tags{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.tag{padding:8px 10px;border-radius:999px;background:#0a1720;border:1px solid #28465a;color:#cde8f7;font-size:13px}
+    .cta{padding:30px 0 86px}.cta-box{text-align:center;padding:44px 24px;border-radius:28px;background:radial-gradient(circle at 80% 10%,rgba(30,168,255,.2),transparent 30%),var(--surface);border:1px solid #2b4a60}.cta-box h2{font-size:clamp(32px,4vw,46px);margin:8px 0}.cta-box p{color:var(--muted);font-size:18px}
     footer{border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted);font-size:13px}.footer{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.footer-links{display:flex;gap:16px;flex-wrap:wrap}.footer a{text-decoration:none}.footer a:hover{color:white}
-    @media(max-width:900px){.hero-grid,.community{grid-template-columns:1fr}.paths{grid-template-columns:1fr}.loop{grid-template-columns:1fr 1fr}.card p{min-height:0}.navlinks a:not(.btn){display:none}}
-    @media(max-width:620px){.shell{width:min(100% - 28px,var(--max))}.nav{min-height:68px}.brand img{width:154px;height:46px}.navlinks{gap:8px}.navlinks .secondary{display:none}.hero{padding:58px 0 40px}.lead{font-size:18px}.actions{flex-direction:column}.actions .btn{width:100%}.loop,.places{grid-template-columns:1fr}section{padding:52px 0}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+    @media(max-width:900px){.hero-grid,.community-grid{grid-template-columns:1fr}.outcomes,.examples{grid-template-columns:1fr}.loop{grid-template-columns:1fr 1fr}.navlinks a:not(.btn){display:none}}
+    @media(max-width:620px){.shell{width:min(100% - 28px,var(--max))}.nav{min-height:68px}.brand img{width:154px;height:46px}.navlinks .secondary{display:none}.hero{padding:56px 0 38px}.lead{font-size:18px}.actions{flex-direction:column}.actions .btn{width:100%}.loop{grid-template-columns:1fr}section{padding:50px 0}}
   </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
-<header>
-  <div class="shell nav">
-    <a class="brand" href="./" aria-label="Fecta home"><img src="./assets/fecta-logo-horizontal.svg" alt="Fecta"></a>
-    <nav class="navlinks" aria-label="Main navigation">
-      <a href="#paths">Starting paths</a>
-      <a href="#how">How it works</a>
-      <a href="#community">Community</a>
-      <a class="btn secondary" href="./signin.html">Sign in</a>
-      <a class="btn primary" href="#paths">Start here</a>
-    </nav>
-  </div>
-</header>
+<header><div class="shell nav"><a class="brand" href="./" aria-label="Fecta home"><img src="./assets/fecta-logo-horizontal.svg" alt="Fecta"></a><nav class="navlinks" aria-label="Main navigation"><a href="#how">How it works</a><a href="#opportunities">Opportunities</a><a class="btn secondary" href="./signin.html">Sign in</a><a class="btn primary" href="./onboarding.html?guest=1">Find my next step</a></nav></div></header>
 <main id="main">
-  <section class="hero">
-    <div class="shell hero-grid">
-      <div>
-        <div class="eyebrow">Fecta Forward</div>
-        <h1>Build capability.<br>Find direction.<br>Put it to use.</h1>
-        <p class="lead">Fecta helps you choose what matters now, take one realistic step, and connect your growth to real opportunities in your life and community.</p>
-        <div class="actions">
-          <a class="btn primary" href="#paths">Choose my starting point</a>
-          <a class="btn secondary" href="./signin.html">Open my Fecta</a>
-        </div>
-        <p class="micro">Start free as a guest. Create an account only when you want to save across devices.</p>
-      </div>
-      <aside class="guide-card" aria-labelledby="guide-title">
-        <div class="eyebrow">Fecta Guide</div>
-        <h2 id="guide-title">What would you like to move forward?</h2>
-        <p>Write one thing. The Guide will point you toward the clearest starting path.</p>
-        <label for="guideInput" class="eyebrow">Your focus</label>
-        <textarea id="guideInput" placeholder="I want more energy, clearer direction, or stronger community connections..."></textarea>
-        <button class="btn primary" type="button" onclick="guideMe()">Find my starting point</button>
-        <div class="guide-result" id="guideResult" aria-live="polite"></div>
-      </aside>
+  <section class="hero"><div class="shell hero-grid">
+    <div><div class="eyebrow">Direction for real life</div><h1>Know what to work on next—and where it could lead.</h1>
+      <p class="lead">Fecta helps you understand where you are, choose a direction, take practical steps, and connect your growth with real opportunities.</p>
+      <div class="problem"><strong>The problem Fecta solves:</strong> You know you want something to improve, but it can be difficult to see what needs attention first or how today’s effort connects to a meaningful future.</div>
+      <div class="actions"><a class="btn primary" href="./onboarding.html?guest=1">Find my next step</a><a class="btn secondary" href="#how">See how Fecta works</a></div>
+      <p class="micro">Start privately as a guest. Create an account when you want to save across devices.</p>
     </div>
-  </section>
+    <aside class="promise"><div class="eyebrow">What Fecta provides</div><h2>A clear path from awareness to opportunity.</h2>
+      <div class="promise-list">
+        <div class="promise-item"><span class="check">1</span><div><strong>Direction</strong><span>See what needs attention and choose one focus that fits your life.</span></div></div>
+        <div class="promise-item"><span class="check">2</span><div><strong>Practical action</strong><span>Turn that direction into a realistic next step you can complete.</span></div></div>
+        <div class="promise-item"><span class="check">3</span><div><strong>Meaningful progress</strong><span>Record milestones, understand what changed, and see new possibilities.</span></div></div>
+      </div>
+    </aside>
+  </div></section>
 
-  <section id="paths">
-    <div class="shell">
-      <div class="section-head">
-        <div class="eyebrow">Three starting paths</div>
-        <h2>Start with what needs attention today.</h2>
-        <p>You do not need to solve everything at once. Choose one area and Fecta will help you build from there.</p>
-      </div>
-      <div class="paths">
-        <article class="card"><div class="path-icon">↻</div><h3>Fecta Body</h3><p>Build movement, control, strength, energy, and confidence in your body.</p><button class="btn primary" onclick="startPath('Better movement')">Start with my body</button></article>
-        <article class="card"><div class="path-icon">◎</div><h3>Fecta Direction</h3><p>Understand your strengths, interests, values, skills, and realistic next paths.</p><button class="btn primary" onclick="startPath('Clearer direction')">Find my direction</button></article>
-        <article class="card"><div class="path-icon">⌖</div><h3>Fecta Community</h3><p>Find people, places, programs, and opportunities where you can participate and contribute.</p><button class="btn primary" onclick="startPath('More connection')">Explore community</button></article>
-      </div>
+  <section><div class="shell"><div class="section-head"><div class="eyebrow">The transformation</div><h2>Build a more capable life—for you and your community.</h2><p>Fecta brings personal development and community opportunity together instead of treating them as separate parts of life.</p></div>
+    <div class="outcomes">
+      <article class="card"><div class="icon">↻</div><h3>Build capability</h3><p>Develop movement, health, confidence, habits, knowledge, and useful real-life skills.</p></article>
+      <article class="card"><div class="icon">◎</div><h3>Find direction</h3><p>Understand your story, strengths, interests, values, and the paths they could support.</p></article>
+      <article class="card"><div class="icon">⌖</div><h3>Put it to use</h3><p>Find people, places, programs, work, and missions where your growth can create value.</p></article>
     </div>
-  </section>
+  </div></section>
 
-  <section id="how">
-    <div class="shell">
-      <div class="section-head"><div class="eyebrow">The Fecta loop</div><h2>One clear step, then review.</h2><p>Fecta turns personal development into a repeatable process instead of an overwhelming list.</p></div>
-      <div class="loop">
-        <article class="step"><div class="num">1</div><h3>Check in</h3><p>Notice what needs attention in your body, direction, or community.</p></article>
-        <article class="step"><div class="num">2</div><h3>Choose</h3><p>Pick one meaningful direction that fits your current life.</p></article>
-        <article class="step"><div class="num">3</div><h3>Act</h3><p>Complete one realistic goal or community mission.</p></article>
-        <article class="step"><div class="num">4</div><h3>Review</h3><p>Record what changed, keep the growth, and choose what comes next.</p></article>
-      </div>
+  <section id="how"><div class="shell"><div class="section-head"><div class="eyebrow">The Fecta loop</div><h2>One clear step. One meaningful review.</h2><p>You do not need to solve everything at once. Fecta helps you move through four repeatable stages.</p></div>
+    <div class="loop">
+      <article class="step"><div class="num">1</div><h3>Check in</h3><p>Notice what needs attention in your body, direction, or community.</p></article>
+      <article class="step"><div class="num">2</div><h3>Choose</h3><p>Pick one meaningful direction that fits your current reality.</p></article>
+      <article class="step"><div class="num">3</div><h3>Act</h3><p>Complete one realistic goal, practice, or community mission.</p></article>
+      <article class="step"><div class="num">4</div><h3>Review</h3><p>Record what mattered, what you learned, and what opportunity comes next.</p></article>
     </div>
-  </section>
+  </div></section>
 
-  <section id="community">
-    <div class="shell">
-      <div class="section-head"><div class="eyebrow">Starting in Georgina</div><h2>Personal growth connected to local life.</h2><p>Fecta is being built to help people discover useful places, activities, skills, businesses, and community opportunities close to home—then expand across Ontario and Canada.</p></div>
-      <div class="community">
-        <article class="community-card"><div class="eyebrow">For people</div><h3>Find somewhere to begin.</h3><p>Explore fitness, health, arts, recreation, learning, volunteering, work, and skill-building through one simpler local path.</p><a class="btn primary" href="./signin.html">Build my path</a></article>
-        <article class="community-card"><div class="eyebrow">Community places to explore</div><div class="places">
-          <div class="place">Anchor Gym Keswick<small>Fitness and capability</small></div>
-          <div class="place">Keswick 24/7 Fitness<small>Fitness and training</small></div>
-          <div class="place">Georgina Ice Palace & Club 55<small>Recreation and community</small></div>
-          <div class="place">Stephen Leacock Theatre<small>Arts and participation</small></div>
-          <div class="place">Georgina Naturopathic<small>Health and wellbeing</small></div>
-          <div class="place">The Health Hut<small>Local health resources</small></div>
-        </div><p class="notice">These are local places Fecta may explore for community information and future conversations. Listing does not imply a formal partnership.</p></article>
-      </div>
+  <section><div class="shell"><div class="section-head"><div class="eyebrow">What this can look like</div><h2>Start with your real situation.</h2></div>
+    <div class="examples">
+      <article class="example"><div class="from">“I feel stuck and do not know what direction fits me.”</div><div class="arrow">Direction → Strengths → First experiment</div><div class="to">Build evidence about what energizes you and what path deserves another step.</div></article>
+      <article class="example"><div class="from">“My body and energy need more attention.”</div><div class="arrow">Body check-in → Movement goal → Review</div><div class="to">Build control, confidence, and a healthier foundation without trying to change everything at once.</div></article>
+      <article class="example"><div class="from">“I want to meet people and do something useful locally.”</div><div class="arrow">Interest → Local opportunity → Community mission</div><div class="to">Turn an interest or strength into participation, contribution, and belonging.</div></article>
     </div>
-  </section>
+  </div></section>
 
-  <section class="cta"><div class="shell"><div class="cta-box"><div class="eyebrow">Your next step</div><h2>Choose one direction and start moving forward.</h2><p>Use Fecta as a guest, or sign in to keep your path and progress.</p><div class="actions" style="justify-content:center"><a class="btn primary" href="#paths">Choose a path</a><a class="btn secondary" href="./signin.html">Sign in or continue as guest</a></div></div></div></section>
+  <section id="opportunities"><div class="shell"><div class="section-head"><div class="eyebrow">Starting in Georgina</div><h2>Growth should open real doors.</h2><p>Fecta is being built to connect personal development with local places where people can learn, participate, contribute, work, create, or lead.</p></div>
+    <div class="community-grid">
+      <article class="community-card"><h3>Opportunity directions</h3><div class="tags"><span class="tag">Fitness and movement</span><span class="tag">Health and wellbeing</span><span class="tag">Arts and creativity</span><span class="tag">Learning and skills</span><span class="tag">Volunteering</span><span class="tag">Work and mentorship</span></div><p>Your signed-in Fecta path will help narrow these opportunities to what fits your direction.</p></article>
+      <article class="community-card"><h3>Built with community</h3><p>Fecta will grow through local interviews, member stories, trusted resources, events, businesses, community centres, and people willing to share what they can offer.</p><a class="btn secondary" href="./signin.html">Open my Fecta</a></article>
+    </div>
+  </div></section>
+
+  <section class="cta"><div class="shell"><div class="cta-box"><div class="eyebrow">Your starting point</div><h2>You do not need the whole plan. You need the next useful step.</h2><p>Answer a few simple questions and begin your Fecta path.</p><div class="actions" style="justify-content:center"><a class="btn primary" href="./onboarding.html?guest=1">Find my next step</a><a class="btn secondary" href="./signin.html">Sign in</a></div></div></div></section>
 </main>
 <footer><div class="shell footer"><span>© 2026 Fecta. Build capability. Strengthen community.</span><div class="footer-links"><a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="./health-disclaimer.html">Health disclaimer</a></div></div></footer>
-<script>
-  function startPath(direction){
-    localStorage.setItem("fecta_starting_direction",direction);
-    window.location.href="./signin.html";
-  }
-  function routeFor(text){
-    const value=text.toLowerCase();
-    if(/body|move|fitness|strength|pain|energy|health/.test(value)) return {direction:"Better movement",title:"Start with Fecta Body",copy:"Build a clearer picture of how your body feels and choose one realistic movement goal."};
-    if(/people|community|connect|local|volunteer|belong|event/.test(value)) return {direction:"More connection",title:"Start with Fecta Community",copy:"Choose the kind of local connection or contribution that would feel useful now."};
-    return {direction:"Clearer direction",title:"Start with Fecta Direction",copy:"Clarify your strengths, interests, and the next path that fits your life."};
-  }
-  function guideMe(){
-    const input=document.getElementById("guideInput");
-    const result=document.getElementById("guideResult");
-    const value=input.value.trim();
-    if(!value){result.className="guide-result open";result.innerHTML="<strong>Write one thing you want to change or build.</strong><span>It can be about your body, direction, or community.</span>";return}
-    const route=routeFor(value);
-    result.className="guide-result open";
-    result.innerHTML="";
-    const title=document.createElement("strong");title.textContent=route.title;
-    const copy=document.createElement("span");copy.textContent=route.copy;
-    const button=document.createElement("button");button.className="btn primary";button.style.marginTop="12px";button.textContent="Start this path";button.onclick=()=>startPath(route.direction);
-    result.append(title,copy,button);
-  }
-</script>
 </body>
 </html>
